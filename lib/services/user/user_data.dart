@@ -26,10 +26,13 @@ class UserData {
 
     var response = await client.get(Uri.parse(kUrlApi + 'showProfile?page=1'),
         headers: requestHeaders);
-
-    List comentsJson = json.decode(response.body)['scans']['data'];
-    print("jsonMap $comentsJson");
-    return comentsJson.map((json) => new Datum.fromJson(json)).toList();
+    try {
+      List comentsJson = json.decode(response.body)['scans']['data'];
+      print("jsonMap $comentsJson");
+      return comentsJson.map((json) => new Datum.fromJson(json)).toList();
+    } catch (e) {
+      print("eeeeeeeeeeeeeeeeeeeeeeeeeee $e");
+    }
 
     //   return userModel;
   }

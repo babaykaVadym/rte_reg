@@ -20,15 +20,6 @@ class PersonalSetings extends GetView<UserController> {
   final _phoneController = TextEditingController();
   final _mailController = TextEditingController();
   final _companyController = TextEditingController();
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _passwordController.dispose();
-    _phoneController.dispose();
-    _mailController.dispose();
-    _lastNameController.dispose();
-    _companyController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,12 +150,6 @@ class PersonalSetings extends GetView<UserController> {
                 )),
               ),
             ),
-            /*_RowsP(data.firstName, "Имя:"),
-            _RowsP(data.lastName, "Фамилия:"),
-            _RowsP(data.email, "E-mail"),
-            _RowsP(data.telephoneFullNumber, "Контактный номер:"),
-            _RowsP(data.company, "Компания:"),
-            _RowsP("profile net dol", "Должность:"),*/
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -27,7 +27,7 @@ dependencies:
   curved_navigation_bar: ^0.3.7
   qr_code_scanner: ^0.3.5
   syncfusion_flutter_barcodes: ^18.4.49
-
+  flutter_restart: ^0.0.3
   get: ^4.1.1
   image_picker: ^0.7.3
   image_gallery_saver: ^1.6.9

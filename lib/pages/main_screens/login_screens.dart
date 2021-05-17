@@ -19,6 +19,7 @@ class _LoginScreensState extends State<LoginScreens> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   readValues() {
     if (password.length > 3 && mailUser.contains('@') == true) {
+      print(Const.token);
       conect();
     } else {
       scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -27,8 +28,8 @@ class _LoginScreensState extends State<LoginScreens> {
     }
   }
 
-  conect() async {
-    await LoginData()
+  conect() {
+    LoginData()
         .loginData(mailUser: mailUser, password: password, key: scaffoldKey);
   }
 

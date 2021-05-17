@@ -37,7 +37,7 @@ class UserController extends GetxController with StateMixin<UserModel> {
 
   void fetchUserContats() async {
     var events = await UserData().getContactUserData();
-
+    print("eeeeeeeeeeeeeeeeeeeeeeeeeeee $events");
     if (events != null) {
       RxStatus.success();
 

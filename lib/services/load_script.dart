@@ -52,8 +52,8 @@ class LoadScrepss {
     }
     await eventController.fetchIdEvents();
     //   await userController.fetchUserLogo();
-    userController.fetchUserContats();
 
+    userController.fetchUserContats();
     eventController.UserId.value = userController.value.id;
     Const.UserID = userController.value.id;
     comentController.UserId.value = userController.value.id;

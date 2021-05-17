@@ -10,8 +10,7 @@ class TicketsProvider {
     var client = http.Client();
     var response = await client.get(Uri.parse(kUrlApi + 'events/orders'),
         headers: requestHeaders);
-    print(response.body);
-    print(response.statusCode);
+
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body)['data'];
 

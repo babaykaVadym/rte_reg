@@ -25,7 +25,7 @@ class LoginData {
     if (response.statusCode == 200) {
       var jsonData = await jsonDecode(response.body);
       Const.token = jsonData['access_token'];
-
+      print('passwordss2  ${Const.token}');
       if (Const.token != null) {
         prefs.setString('usernamess', mailUser);
         prefs.setString('passwordss', password);
