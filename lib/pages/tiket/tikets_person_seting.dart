@@ -175,7 +175,7 @@ class TiketPersonSetings extends StatelessWidget {
       ),
     );
   }
-
+//
   btnSend(context) async {
     FocusScope.of(context).requestFocus(new FocusNode());
 
