@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -175,6 +177,8 @@ class TiketPersonSetings extends StatelessWidget {
   }
 
   btnSend(context) async {
+    FocusScope.of(context).requestFocus(new FocusNode());
+
     final holdeItem = Ticket(
         holder: Holder(
       lastName: _lastNameController.text.isEmpty
@@ -201,7 +205,14 @@ class TiketPersonSetings extends StatelessWidget {
         event_id: ticketsController.event_id.value,
         hash_id: ticket.hash,
         item: holdeItem);
-    FocusScope.of(context).requestFocus(new FocusNode());
+    //  await LoadScrepss().RunTikets();
+    Timer(Duration(milliseconds: 650), () {
+      Get.back();
+    });
+    Get.back();
+    /* Get.off(HomePage(
+      currentIndex: 3,
+    ));*/
   }
 }
 

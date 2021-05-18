@@ -145,10 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: data.length,
           itemBuilder: (context, index) {
             var article = data[index];
-            var formattedTime = DateFormat('dd MMM - HH:mm').format(
+            var formattedTime = DateFormat('d/M/y - HH:mm').format(
                 data.toString().contains("EventIdModel")
-                    ? article.eventStart
-                    : article.event.eventStart);
+                    ? article.registrationStart
+                    : article.event.registrationStart);
 
             return Container(
               height: 110,

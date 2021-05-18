@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rte_cubit/controllers/chat/contact_controller.dart';
 import 'package:rte_cubit/services/consts.dart';
 
 import 'chat_screens/contact_menu.dart';
@@ -12,29 +13,31 @@ import 'main_screens/ticket_screen.dart';
 import 'parson_draw/prof_draw.dart';
 
 class HomePage extends StatefulWidget {
+  int currentIndex;
+  HomePage({this.currentIndex});
   static String routeName = "/";
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentIndex;
+  ContactController controller;
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-
-    currentIndex = 0;
+    controller = Get.put<ContactController>(ContactController());
+    controller.fetchContact();
   }
 
   void changePage(int index) {
     setState(() {
-      currentIndex = index;
+      widget.currentIndex = index;
     });
   }
 
   Widget _getScreen() {
-    switch (currentIndex) {
+    switch (widget.currentIndex) {
       case 0:
         return HomeScreen();
       case 1:
@@ -52,7 +55,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   AppBar get _getAppBar {
-    switch (currentIndex) {
+    switch (widget.currentIndex) {
       case 0:
         return HomeScreen.appBar(context);
       case 1:
@@ -89,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         drawer: ProfilDraws(changePage),
         bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
-          index: currentIndex,
+          index: widget.currentIndex,
           height: 50.0,
           items: <Widget>[
             Icon(Icons.home, size: 30),

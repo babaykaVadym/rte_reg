@@ -27,7 +27,9 @@ class EventIdModel {
     this.locationName,
     this.createdAt,
     this.updatedAt,
-    this.domain,
+    //   this.domain,
+    this.webHooks,
+    this.schema,
   });
 
   int id;
@@ -43,10 +45,12 @@ class EventIdModel {
   String logo;
   String logoType;
   String subwayStation;
-  dynamic locationName;
+  String locationName;
   DateTime createdAt;
   DateTime updatedAt;
-  Domain domain;
+  // Domain domain;
+  List<dynamic> webHooks;
+  dynamic schema;
 
   factory EventIdModel.fromJson(Map<String, dynamic> json) => EventIdModel(
         id: json["id"],
@@ -55,17 +59,19 @@ class EventIdModel {
         address: json["address"],
         addressLat: json["address_lat"],
         addressLng: json["address_lng"],
-        // registrationStart: DateTime.parse(json["registration_start"]),
-        //  registrationEnd: DateTime.parse(json["registration_end"]),
+        registrationStart: DateTime.parse(json["registration_start"]),
+        registrationEnd: DateTime.parse(json["registration_end"]),
         eventStart: DateTime.parse(json["event_start"]),
-        //   eventEnd: DateTime.parse(json["event_end"]),
+        eventEnd: DateTime.parse(json["event_end"]),
         logo: json["logo"],
         logoType: json["logo_type"],
         subwayStation: json["subway_station"],
         locationName: json["location_name"],
-        //   createdAt: DateTime.parse(json["created_at"]),
-        //   updatedAt: DateTime.parse(json["updated_at"]),
-        domain: Domain.fromJson(json["domain"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        // domain: Domain.fromJson(json["domain"]),
+        webHooks: List<dynamic>.from(json["web_hooks"].map((x) => x)),
+        schema: json["schema"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,13 +91,15 @@ class EventIdModel {
         "location_name": locationName,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "domain": domain.toJson(),
+        //  "domain": domain.toJson(),
+        "web_hooks": List<dynamic>.from(webHooks.map((x) => x)),
+        "schema": schema,
       };
 }
 
-class Domain {
+/*class Domain {
   Domain({
-    this.id,
+    //this.id,
     this.domainName,
     this.eventId,
     this.image,
@@ -119,35 +127,35 @@ class Domain {
     this.href,
   });
 
-  int id;
+//  int id;
   String domainName;
   int eventId;
   String image;
   int isProgram;
   String programTitle;
-  dynamic programHtml;
+  String programHtml;
   int isSpeakers;
   String speakersTitle;
-  dynamic speakersHtml;
+  String speakersHtml;
   int isYoutube;
   String youtubeTitle;
   int isSocial;
   String socialTitle;
   int isAbout;
   String aboutTitle;
-  dynamic youtube;
+  String youtube;
   dynamic facebook;
   dynamic instagram;
   dynamic telegram;
   int isMap;
-  dynamic map;
+  String map;
   DateTime createdAt;
   DateTime updatedAt;
   String formType;
   String href;
 
   factory Domain.fromJson(Map<String, dynamic> json) => Domain(
-        id: json["id"],
+        //  id: json["id"],
         domainName: json["domain_name"],
         eventId: json["event_id"],
         image: json["image"],
@@ -176,7 +184,7 @@ class Domain {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        // "id": id,
         "domain_name": domainName,
         "event_id": eventId,
         "image": image,
@@ -203,4 +211,4 @@ class Domain {
         "form_type": formType,
         "href": href,
       };
-}
+}*/

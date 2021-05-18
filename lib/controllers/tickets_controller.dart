@@ -17,7 +17,7 @@ class TicketsController extends GetxController
   var oldTicketsList = List<DatumData>().obs;
   var event_id = 0.obs;
   var tiket_id = 0.obs;
-
+  var now = new DateTime.now();
   void fetchTickets() async {
     try {
       isLoading(true);
@@ -25,8 +25,26 @@ class TicketsController extends GetxController
       if (tickets != null) {
         change(value, status: RxStatus.success());
         ticketsList.value = tickets as List<DatumData>;
-        ticketsList.refresh();
-        oldTicketsList.refresh();
+        // LoadScrepss().RunTikets();
+        oldTicketsList.value.clear();
+        newTicketsList.value.clear();
+        byingTicketsList.value.clear();
+        for (int i = 0; i < ticketsList.length; i++) {
+          if (ticketsList[i].event.eventEnd.millisecondsSinceEpoch <
+              now.millisecondsSinceEpoch) {
+            oldTicketsList.value.add(ticketsList[i]);
+          } else {
+            if (ticketsList[i].status.status == "new") {
+              newTicketsList.value.add(ticketsList[i]);
+            } else if (ticketsList[i].status.status != "new") {
+              byingTicketsList.value.add(ticketsList[i]);
+              print(byingTicketsList.length);
+            }
+          }
+        }
+        await oldTicketsList.refresh();
+        await newTicketsList.refresh();
+        await byingTicketsList.refresh();
       }
     } finally {
       isLoading(false);
@@ -38,6 +56,5 @@ class TicketsController extends GetxController
         event_id: event_id, tiket_id: tiket_id, hash_id: hash_id, item: item);
     await fetchTickets();
     ticketsList.refresh();
-    oldTicketsList.refresh();
   }
 }

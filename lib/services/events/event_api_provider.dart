@@ -30,11 +30,11 @@ class EventProvider {
 
     var response = await client.get(Uri.parse(kUrlApi + 'events/$event_id'),
         headers: requestHeaders);
-
     var jsonString = response.body;
-
+    print(" 000000000000000000000000000000 $jsonString");
+    print(" 000000000000000000000000000000 ${response.statusCode}");
     var jsonMap = json.decode(jsonString);
-    print(jsonMap);
+
     userModel = EventIdModel.fromJson(jsonMap);
 
     return userModel;

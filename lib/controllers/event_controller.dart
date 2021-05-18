@@ -41,13 +41,13 @@ class EventController extends GetxController
     try {
       isLoading(true);
 
-      for (var n in event_id_List) {
-        var events = await EventProvider().getEventIdData(n);
+      for (int n = 0; n < event_id_List.length; n++) {
+        var events = await EventProvider().getEventIdData(event_id_List[n]);
         if (events != null) {
           RxStatus.success();
           print(
               "events.eventStart events.eventStart 22222222222222222222222  ${events.eventStart}");
-          if (events.eventStart.millisecondsSinceEpoch <=
+          if (events.eventEnd.millisecondsSinceEpoch <=
               now.millisecondsSinceEpoch) {
             oldEventList.value.add(events);
           } else {

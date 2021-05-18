@@ -69,8 +69,8 @@ class SplashScreen extends StatelessWidget {
   Future<bool> LogindsData(context) async {
     final SharedPreferences prefs = await _prefs;
 
-    String log = await prefs.getString('usernamess');
-    String pss = await prefs.getString('passwordss');
+    String log = await prefs.getString('usernamee');
+    String pss = await prefs.getString('passwordd');
 
     await LoginData().loginData(password: pss, mailUser: log, key: scaffoldKey);
   }
@@ -78,7 +78,7 @@ class SplashScreen extends StatelessWidget {
   Future<bool> _getRegistrationStatus() async {
     final SharedPreferences prefs = await _prefs;
 
-    return prefs.getBool('Registereds') ?? false;
+    return prefs.getBool('Registeredss') ?? false;
   }
 
   Future<bool> _checkInternetAvailability() async {

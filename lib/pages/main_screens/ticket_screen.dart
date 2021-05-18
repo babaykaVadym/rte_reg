@@ -120,47 +120,32 @@ class TicketScreen extends GetView<TicketsController> {
                     ),
                     Flexible(
                       child: ListView.builder(
-                          itemCount: controller.ticketsList.length,
+                          itemCount: controller.ints.value == 0
+                              ? controller.newTicketsList.length
+                              : controller.ints.value == 1
+                                  ? controller.byingTicketsList.length
+                                  : controller.oldTicketsList.length,
                           itemBuilder: (context, index) {
                             var now = new DateTime.now();
                             switch (controller.ints.value) {
                               case 0:
-                                if (controller
-                                        .ticketsList[index].status.status ==
-                                    "new") {
-                                  return TicketsWidgets(
-                                    ticketModel: controller.ticketsList[index],
-                                  );
-                                }
+                                return TicketsWidgets(
+                                  ticketModel: controller.newTicketsList[index],
+                                );
+
                                 break;
                               case 1:
-                                if (controller
-                                        .ticketsList[index]
-                                        .event
-                                        .registrationStart
-                                        .millisecondsSinceEpoch >=
-                                    now.millisecondsSinceEpoch) {
-                                  if (controller
-                                          .ticketsList[index].status.status !=
-                                      "new") {
-                                    return TicketsWidgets(
-                                      ticketModel:
-                                          controller.ticketsList[index],
-                                    );
-                                  }
-                                }
+                                return TicketsWidgets(
+                                  ticketModel:
+                                      controller.byingTicketsList[index],
+                                );
+
                                 break;
                               case 2:
-                                if (controller
-                                        .ticketsList[index]
-                                        .event
-                                        .registrationStart
-                                        .millisecondsSinceEpoch <
-                                    now.millisecondsSinceEpoch) {
-                                  return TicketsWidgets(
-                                    ticketModel: controller.ticketsList[index],
-                                  );
-                                }
+                                return TicketsWidgets(
+                                  ticketModel: controller.oldTicketsList[index],
+                                );
+
                                 break;
                             }
                           }),

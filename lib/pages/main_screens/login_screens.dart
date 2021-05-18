@@ -13,6 +13,7 @@ class LoginScreens extends StatefulWidget {
 
 class _LoginScreensState extends State<LoginScreens> {
   bool _hidePass = true;
+  bool activeBts = true;
   Future<bool> _isRegistered;
   String mailUser;
   String password;
@@ -108,24 +109,43 @@ class _LoginScreensState extends State<LoginScreens> {
                 SizedBox(
                   height: 20,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        MediaQuery.of(context).size.height / 2.23),
-                    color: kYellowColor,
-                  ),
-                  // ignore: deprecated_member_use
-                  child: FlatButton(
-                    child: Text(
-                      "Войти",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {
-                      readValues();
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                    },
-                  ),
-                ),
+                activeBts
+                    ? Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.of(context).size.height / 2.23),
+                          color: kYellowColor,
+                        ),
+                        // ignore: deprecated_member_use
+                        child: FlatButton(
+                          child: Text(
+                            "Войти",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              activeBts = false;
+                            });
+                            readValues();
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
+                          },
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.of(context).size.height / 2.23),
+                          color: kAppBarColot,
+                        ),
+                        // ignore: deprecated_member_use
+                        child: FlatButton(
+                          child: Text(
+                            "Войти",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ),
               ],
             ),
             Row(

@@ -40,7 +40,7 @@ class TicketsWidgets extends GetView<TicketsController> {
                 child: Column(
                   children: [
                     Text(
-                        '${DateFormat('dd MMM - HH:mm').format(ticketModel.event.eventStart)}'),
+                        '${DateFormat('d/M/y - HH:mm').format(ticketModel.event.eventEnd)}'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

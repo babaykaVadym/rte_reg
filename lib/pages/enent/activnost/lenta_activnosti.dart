@@ -25,8 +25,9 @@ class LentaActivnosti extends StatelessWidget {
 
             return Padding(
               padding: const EdgeInsets.all(6.0),
-              child: GestureDetector(
-                onTap: () {
+              child: TextButton(
+                onPressed: () {
+                  print("event.idevent.idevent.idevent.id ${event.id}");
                   eventController.page.value = 1;
                   eventController.eventListComs.clear();
                   eventController.fetchEventsComent(event.id);
@@ -62,11 +63,19 @@ class LentaActivnosti extends StatelessWidget {
                           Text(
                             event.title,
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
-                          Text(event.description),
-                          Text(DateFormat('d/M/y').format(event.eventStart)),
-                          Text(event.address)
+                          //Expanded(child: Text(event.description)),
+                          Text(
+                            DateFormat('d/M/y').format(event.eventEnd),
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Text(
+                            event.address,
+                            style: TextStyle(color: Colors.black),
+                          )
                         ],
                       )
                     ],

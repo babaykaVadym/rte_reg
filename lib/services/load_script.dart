@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:rte_cubit/controllers/chat/contact_controller.dart';
 import 'package:rte_cubit/controllers/chat/masseg_controller.dart';
 import 'package:rte_cubit/controllers/coment_controller.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
@@ -12,7 +11,7 @@ class LoadScrepss {
   EventController eventController;
   UserController userController;
   ComentController comentController;
-  ContactController controller;
+
   MessegeController messegeController;
   RunTikets() async {
     await Get.reset();
@@ -21,9 +20,9 @@ class LoadScrepss {
     eventController = await Get.put<EventController>(EventController());
     userController = Get.put<UserController>(UserController());
     comentController = Get.put<ComentController>(ComentController());
-    controller = Get.put<ContactController>(ContactController());
+
     messegeController = Get.put<MessegeController>(MessegeController());
-    await controller.fetchContact();
+
     await ticketsController.fetchTickets();
     var now = new DateTime.now();
     for (int i = 0; i < ticketsController.ticketsList.length; i++) {
@@ -33,9 +32,10 @@ class LoadScrepss {
         eventController.event_id_List.value
             .add(ticketsController.ticketsList[i].event.id);
       }
-
-      if (ticketsController
-              .ticketsList[i].event.registrationStart.millisecondsSinceEpoch <=
+      print(
+          "eventController.event_id_List.value  ${ticketsController.ticketsList.length}");
+      /*if (ticketsController
+              .ticketsList[i].event.eventEnd.millisecondsSinceEpoch <
           now.millisecondsSinceEpoch) {
         ticketsController.oldTicketsList.value
             .add(ticketsController.ticketsList[i]);
@@ -48,8 +48,10 @@ class LoadScrepss {
               .add(ticketsController.ticketsList[i]);
           print(ticketsController.byingTicketsList.length);
         }
-      }
+      }*/
     }
+    print(
+        "eventController.event_id_List.value allla ${eventController.event_id_List.value}");
     await eventController.fetchIdEvents();
     //   await userController.fetchUserLogo();
 

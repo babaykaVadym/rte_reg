@@ -25,15 +25,18 @@ class LoginData {
     if (response.statusCode == 200) {
       var jsonData = await jsonDecode(response.body);
       Const.token = jsonData['access_token'];
-      print('passwordss2  ${Const.token}');
+
       if (Const.token != null) {
-        prefs.setString('usernamess', mailUser);
-        prefs.setString('passwordss', password);
+        prefs.setString('usernamee', mailUser);
+        prefs.setString('passwordd', password);
         snacBar(
             key: key, color: Colors.green, text: "Успешный вход. Подождите");
         await LoadScrepss().RunTikets();
-        Get.off(HomePage());
-        _isRegistered = prefs.setBool("Registereds", true).then((bool success) {
+        Get.off(HomePage(
+          currentIndex: 0,
+        ));
+        _isRegistered =
+            prefs.setBool("Registeredss", true).then((bool success) {
           return _isRegistered;
         });
       }

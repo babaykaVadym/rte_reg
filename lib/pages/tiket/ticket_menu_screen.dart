@@ -127,7 +127,7 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
                       ...expansionItem.map(
                         (value) => _buildFaqRow(value, context,
                             ticketsController, widget.ticketModel),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -154,7 +154,7 @@ ExpansionPanel _buildFaqRow(
       );
     },
     body: Container(
-      margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
+      margin: EdgeInsets.only(bottom: 24, left: 8, right: 8),
       child: Column(
         children: [
           Row(
@@ -195,6 +195,65 @@ ExpansionPanel _buildFaqRow(
                   ),
                 ],
               ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.upload_rounded),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text("Улучшить", style: TextStyle(fontSize: 12))
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.live_tv),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text("Трансляция", style: TextStyle(fontSize: 12))
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.file_download),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        "Материалы",
+                        style: TextStyle(fontSize: 12),
+                      )
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
           Row(
