@@ -162,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     Get.to(EventsScrents(
                       event_id: article.id,
+                      eventModel: eventController.eventListM[index],
                     ));
                   }
                   if (data.toString().contains("DatumData")) {

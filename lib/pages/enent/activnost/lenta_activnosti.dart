@@ -34,6 +34,7 @@ class LentaActivnosti extends StatelessWidget {
 
                   Get.to(EventsScrents(
                     event_id: event.id,
+                    eventModel: eventController.oldEventList[index],
                   ));
                 },
                 child: Container(

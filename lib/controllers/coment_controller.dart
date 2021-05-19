@@ -28,17 +28,6 @@ class ComentController extends GetxController
     }
   }
 
-  /* send({ComentModel item, event_id, coment_id}) async {
-    await ComentProvider().setdComentData(event_id, coment_id, item);
-    Get.put(EventController());
-
-    EventController().eventListM.refresh();
-
-    fetchComent();
-
-    comentsLists.refresh();
-  }*/
-
   like(coments_id) async {
     await ComentProvider().setdLike(event_id, coment_id, coments_id);
     fetchComent();

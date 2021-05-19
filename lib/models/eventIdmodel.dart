@@ -27,7 +27,7 @@ class EventIdModel {
     this.locationName,
     this.createdAt,
     this.updatedAt,
-    //   this.domain,
+    this.domain,
     this.webHooks,
     this.schema,
   });
@@ -43,12 +43,13 @@ class EventIdModel {
   DateTime eventStart;
   DateTime eventEnd;
   String logo;
+
   String logoType;
   String subwayStation;
   String locationName;
   DateTime createdAt;
   DateTime updatedAt;
-  // Domain domain;
+  Domain domain;
   List<dynamic> webHooks;
   dynamic schema;
 
@@ -66,10 +67,11 @@ class EventIdModel {
         logo: json["logo"],
         logoType: json["logo_type"],
         subwayStation: json["subway_station"],
-        locationName: json["location_name"],
+        locationName:
+            json["location_name"] == null ? "" : json["location_name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        // domain: Domain.fromJson(json["domain"]),
+        domain: json["domain"] == null ? null : Domain.fromJson(json["domain"]),
         webHooks: List<dynamic>.from(json["web_hooks"].map((x) => x)),
         schema: json["schema"],
       );
@@ -97,7 +99,7 @@ class EventIdModel {
       };
 }
 
-/*class Domain {
+class Domain {
   Domain({
     //this.id,
     this.domainName,
@@ -156,13 +158,14 @@ class EventIdModel {
 
   factory Domain.fromJson(Map<String, dynamic> json) => Domain(
         //  id: json["id"],
-        domainName: json["domain_name"],
-        eventId: json["event_id"],
-        image: json["image"],
-        isProgram: json["is_program"],
-        programTitle: json["program_title"],
-        programHtml: json["program_html"],
-        isSpeakers: json["is_speakers"],
+        //  domainName: json["domain_name"] == null ? "" : json["domain_name"],
+        eventId: json["event_id"] == null ? "" : json["event_id"],
+        image: json["image"] == null ? "" : json["image"],
+        isProgram: json["is_program"] == null ? "" : json["is_program"],
+        programTitle:
+            json["program_title"] == null ? "" : json["program_title"],
+        programHtml: json["program_html"] == null ? "" : json["program_html"],
+        isSpeakers: json["is_speakers"] == null ? "" : json["is_speakers"],
         speakersTitle: json["speakers_title"],
         speakersHtml: json["speakers_html"],
         isYoutube: json["is_youtube"],
@@ -211,4 +214,4 @@ class EventIdModel {
         "form_type": formType,
         "href": href,
       };
-}*/
+}

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
 import 'package:rte_cubit/pages/parson_draw/person_screen.dart';
-import 'package:rte_cubit/widgets/user_image_widgets.dart';
 
 class ListBuilContacts extends StatelessWidget {
   var data;
@@ -13,7 +12,7 @@ class ListBuilContacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: 40,
       margin: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {
@@ -22,8 +21,8 @@ class ListBuilContacts extends StatelessWidget {
               namePerson: data.firstName,
               mailPerson: data.email,
               /* cityPerson: data.position,*/
-              telephone: data.telephoneFullNumber,
-              company: data.company,
+              telephone: data.telephoneCode + data.telephoneNumber,
+              company: data.company == null ? "" : data.company,
               UserId: data.id,
               nameSecPerson: data.lastName,
             );
@@ -31,20 +30,13 @@ class ListBuilContacts extends StatelessWidget {
         },
         child: Row(
           children: [
-            data.id == eventController.UserId.value
-                ? UserImageWidgets()
-                : Card(
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    child: AspectRatio(
-                        aspectRatio: 1,
-                        child: Icon(
-                          Icons.account_circle_outlined,
-                          size: 35,
-                        )),
-                  ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(36),
+              child: Image.network(
+                data.avatar,
+                fit: BoxFit.cover,
+              ),
+            ),
             SizedBox(width: 20),
             Flexible(
               child: Column(
@@ -65,7 +57,7 @@ class ListBuilContacts extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            data.telephoneFullNumber,
+                            data.telephoneCode + data.telephoneNumber,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),

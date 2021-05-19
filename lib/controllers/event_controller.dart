@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/models/coment_model.dart';
+import 'package:rte_cubit/models/event_contact_model.dart';
 import 'package:rte_cubit/models/event_model.dart';
 import 'package:rte_cubit/services/events/coment_provider.dart';
 import 'package:rte_cubit/services/events/event_api_provider.dart';
@@ -16,11 +17,13 @@ class EventController extends GetxController
   var coment_id_coment = 0.obs;
   var isFavorite = false.obs;
   var UserId = 0.obs;
-
+  var pageContact = 1.obs;
+  var pageContactTotalP = 0.obs;
   var paginEventID = 0.obs;
+  var paginEventIDContact = 0.obs;
 
   var oldEventList = RxList();
-
+  var eventContactLict = List<EventContact>().obs;
   final eventListM = RxList();
   get eventList => this.eventListM.value;
   set eventList(value) => this.eventListM.value = value;
@@ -29,9 +32,11 @@ class EventController extends GetxController
   get eventListCom => this.eventListComs.value;
   set eventListCom(value) => this.eventListComs.value = value;
   ScrollController scrollController = ScrollController();
+  ScrollController scrollControllerContact = ScrollController();
   var isLoading = true.obs;
   static var isLoadingEven = true.obs;
   var isMoreDataAvailable = true.obs;
+
   var comCount = 0.obs;
   var likesPeoleCount = 0.obs;
   var now = new DateTime.now();
@@ -61,6 +66,20 @@ class EventController extends GetxController
     }
   }
 
+  void fetchEventContact(event_id) async {
+    var eventContact = await EventProvider()
+        .getEventContact(event_id: event_id, page: pageContact.value);
+    if (eventContact != null) {
+      RxStatus.success();
+
+      paginEventIDContact.value = event_id;
+
+      paginateContact();
+      eventContactLict.value = eventContact as List<EventContact>;
+      eventContactLict.refresh();
+    }
+  }
+
   void fetchEventsComent(event_id) async {
     try {
       isLoading(true);
@@ -70,14 +89,24 @@ class EventController extends GetxController
       if (events != null) {
         paginEventID.value = event_id;
         RxStatus.success();
-        paginateTask();
+        if (pageContactTotalP.value > 1) {
+          print("7777777777777777777777777777777777777777 if");
+          paginateTask();
+        }
 
-        print("paffffffffffffffffff ${page.value}");
         eventListComs.value = events as List<DatumComent>;
         eventListComs.refresh();
       }
     } finally {
       isLoading(false);
+    }
+  }
+
+  void paginateContact() async {
+    for (int i = 0; i <= pageContactTotalP.value; i++) {
+      print("7777777777777777777777777777777777777777 if");
+      pageContact.value++;
+      await getMoreContact(paginEventIDContact.value, pageContact.value);
     }
   }
 
@@ -92,11 +121,9 @@ class EventController extends GetxController
     });
   }
 
-  showSnackBar(String title, String message, Color backgroundColor) {
+  showSnackBar(String title, String message) {
     Get.snackbar(title, message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: backgroundColor,
-        colorText: Colors.white);
+        snackPosition: SnackPosition.BOTTOM, colorText: Colors.white);
   }
 
   void refreshList(event_id) async {
@@ -115,11 +142,25 @@ class EventController extends GetxController
         eventListComs.refresh();
       }, onError: (err) {
         isMoreDataAvailable(false);
-        showSnackBar("Error", err.toString(), Colors.red);
+        showSnackBar("Error", err.toString());
       });
     } catch (exception) {
       isMoreDataAvailable(false);
-      showSnackBar("Exception", exception.toString(), Colors.red);
+      showSnackBar("Exception", exception.toString());
+    }
+  }
+
+  void getMoreContact(event_id, var page) {
+    try {
+      EventProvider().getEventContact(event_id: event_id, page: page).then(
+          (respo) {
+        eventContactLict.value.addAll(respo);
+        eventContactLict.refresh();
+      }, onError: (err) {
+        showSnackBar("Error", err.toString());
+      });
+    } catch (exception) {
+      showSnackBar("Exception", exception.toString());
     }
   }
 

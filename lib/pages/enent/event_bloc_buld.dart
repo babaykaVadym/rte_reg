@@ -33,7 +33,7 @@ class _EventBlocBuildState extends State<EventBlocBuild> {
     // TODO: implement initState
     super.initState();
     print(
-        "ardsdssdsddssdsdsd.article.cometntCounts.value ${widget.article.user.id}");
+        "ardsdssdsddssdsdsd.article.cometntCounts.value ${widget.article.user.avatarUrl}");
     print("widget.eventController.UserId ${widget.eventController.UserId}");
     widget.eventController.UserId.value == widget.article.user.id
         ? print("true")
