@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
+import 'package:rte_cubit/pages/enent/endDrawer/video_event.dart';
 
 import 'event_contact.dart';
 
@@ -117,6 +118,78 @@ class EndDrawerMenu extends StatelessWidget {
             },
           ),
           //   Text(eventIdModel.domain.programHtml.toString()),
+
+          ListTile(
+            leading: Icon(Icons.ondemand_video),
+            title: Text(eventIdModel.domain.youtubeTitle),
+            onTap: () {
+              eventIdModel.domain.youtube == null
+                  ? print("null")
+                  : Get.to(VideoEvemt(
+                      name: eventIdModel.domain.youtubeTitle,
+                      url: eventIdModel.domain.youtube));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.social_distance_outlined),
+            title: Text(eventIdModel.domain.socialTitle),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return SimpleDialog(
+                      title: const Text('Наши контакты'),
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height / 20,
+                              width: MediaQuery.of(context).size.width / 5.5,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.asset(
+                                      "images/logo/facebook-logo.png")),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height / 20,
+                              width: MediaQuery.of(context).size.width / 5.5,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child:
+                                      Image.asset("images/logo/instagram.png")),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height / 20,
+                              width: MediaQuery.of(context).size.width / 5.5,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.asset(
+                                      "images/logo/1024px-Telegram_logo.svg.png")),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
         ],
       ),
     );

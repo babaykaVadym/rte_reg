@@ -454,7 +454,7 @@ packages:
       name: qr_code_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.5"
+    version: "0.4.0"
   quiver:
     dependency: transitive
     description:
@@ -564,14 +564,14 @@ packages:
       name: syncfusion_flutter_barcodes
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "18.4.49"
+    version: "19.1.64"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "18.4.49"
+    version: "19.1.64"
   synchronized:
     dependency: transitive
     description:
@@ -671,7 +671,7 @@ packages:
     source: hosted
     version: "0.2.0+1"
   webview_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: webview_flutter
       url: "https://pub.dartlang.org"

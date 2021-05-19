@@ -12,6 +12,7 @@ Map<String, String> requestHeaders = {
 };
 
 class Const {
+  static bool activeBts = true;
   static String userMail;
   static String passwod;
   static String token;

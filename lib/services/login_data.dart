@@ -41,6 +41,7 @@ class LoginData {
         });
       }
     } else {
+      Const.activeBts = true;
       snacBar(key: key, color: Colors.red, text: "Логин или пароль неверный");
     }
   }

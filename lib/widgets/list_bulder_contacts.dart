@@ -31,12 +31,13 @@ class ListBuilContacts extends StatelessWidget {
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(36),
-              child: Image.network(
+                borderRadius: BorderRadius.circular(36),
+                child: Icon(Icons.perm_identity)
+                /*Image.network(
                 data.avatar,
                 fit: BoxFit.cover,
-              ),
-            ),
+              ),*/
+                ),
             SizedBox(width: 20),
             Flexible(
               child: Column(

@@ -25,8 +25,8 @@ dependencies:
   intl: ^0.17.0
   adaptive_theme: ^2.0.0
   curved_navigation_bar: ^0.3.7
-  qr_code_scanner: ^0.3.5
-  syncfusion_flutter_barcodes: ^18.4.49
+  qr_code_scanner: ^0.4.0
+  syncfusion_flutter_barcodes: ^19.1.64
   flutter_restart: ^0.0.3
   get: ^4.1.1
   image_picker: ^0.7.3
@@ -34,6 +34,7 @@ dependencies:
   dio: ^4.0.0
   giphy_get: ^2.0.0-nullsafety.1
   cached_network_image: ^3.0.0
+  webview_flutter: ^2.0.6
 
 
 dev_dependencies:
@@ -46,6 +47,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - images/logo/
 
 flutter_intl:
   enabled: true

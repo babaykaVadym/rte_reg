@@ -1,10 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/services/login_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
 class LoginScreens extends StatefulWidget {
   @override
@@ -13,8 +12,7 @@ class LoginScreens extends StatefulWidget {
 
 class _LoginScreensState extends State<LoginScreens> {
   bool _hidePass = true;
-  bool activeBts = true;
-  Future<bool> _isRegistered;
+
   String mailUser;
   String password;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -25,7 +23,18 @@ class _LoginScreensState extends State<LoginScreens> {
     } else {
       scaffoldKey.currentState.showSnackBar(SnackBar(
           backgroundColor: Colors.red,
-          content: Text("Логин или пароль неверный")));
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Логин или пароль неверный"),
+            ],
+          )));
+
+      Timer(Duration(milliseconds: 800), () {
+        setState(() {
+          Const.activeBts = true;
+        });
+      });
     }
   }
 
@@ -109,7 +118,7 @@ class _LoginScreensState extends State<LoginScreens> {
                 SizedBox(
                   height: 20,
                 ),
-                activeBts
+                Const.activeBts
                     ? Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
@@ -124,7 +133,12 @@ class _LoginScreensState extends State<LoginScreens> {
                           ),
                           onPressed: () {
                             setState(() {
-                              activeBts = false;
+                              Const.activeBts = false;
+                              Timer(Duration(milliseconds: 800), () {
+                                setState(() {
+                                  Const.activeBts;
+                                });
+                              });
                             });
                             readValues();
                             FocusScope.of(context)
