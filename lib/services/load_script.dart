@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/chat/masseg_controller.dart';
 import 'package:rte_cubit/controllers/coment_controller.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
+import 'package:rte_cubit/controllers/ticket/ticket_upgrade_controller.dart';
+import 'package:rte_cubit/controllers/ticket/tiket_dop_controler.dart';
 import 'package:rte_cubit/controllers/tickets_controller.dart';
 import 'package:rte_cubit/controllers/user_controller.dart';
 import 'package:rte_cubit/services/consts.dart';
@@ -11,7 +13,8 @@ class LoadScrepss {
   EventController eventController;
   UserController userController;
   ComentController comentController;
-
+  TicketDopController ticketdop;
+  TicketUpgrateController _ticketUpgrateController;
   MessegeController messegeController;
   RunTikets() async {
     await Get.reset();
@@ -20,9 +23,9 @@ class LoadScrepss {
     eventController = await Get.put<EventController>(EventController());
     userController = Get.put<UserController>(UserController());
     comentController = Get.put<ComentController>(ComentController());
-
+    ticketdop = Get.put(TicketDopController());
     messegeController = Get.put<MessegeController>(MessegeController());
-
+    _ticketUpgrateController = Get.put(TicketUpgrateController());
     await ticketsController.fetchTickets();
     var now = new DateTime.now();
     for (int i = 0; i < ticketsController.ticketsList.length; i++) {
@@ -55,8 +58,11 @@ class LoadScrepss {
     await eventController.fetchIdEvents();
     //   await userController.fetchUserLogo();
 
-    userController.fetchUserContats();
-    eventController.UserId.value = userController.value.id;
+    await userController.fetchUserContats();
+    print(
+        "userController.value.id  userController.value.id  ${userController.value.id.toString()}");
+    eventController.UserId.value =
+        userController.value.id == null ? 0 : userController.value.id;
     Const.UserID = userController.value.id;
     comentController.UserId.value = userController.value.id;
   }

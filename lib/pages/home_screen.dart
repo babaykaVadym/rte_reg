@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -215,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               formattedTime,
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w500),
                             ),
                           ],

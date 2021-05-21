@@ -12,7 +12,7 @@ class ListBuilContacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 50,
       margin: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {

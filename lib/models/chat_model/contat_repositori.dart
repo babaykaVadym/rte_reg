@@ -12,8 +12,7 @@ class ContactReositori {
     var response = await client.post(
         Uri.parse(kUrlApiChat + 'chatify/getContacts'),
         headers: requestHeaders);
-    //, headers: requestHeaders
-    print(response.body);
+
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body)['contacts'];
 

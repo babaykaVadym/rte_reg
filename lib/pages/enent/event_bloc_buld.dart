@@ -25,20 +25,7 @@ class EventBlocBuild extends StatefulWidget {
 }
 
 class _EventBlocBuildState extends State<EventBlocBuild> {
-  // EventController eventController = Get.find();
   ComentController comentController = Get.find();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(
-        "ardsdssdsddssdsdsd.article.cometntCounts.value ${widget.article.user.avatarUrl}");
-    print("widget.eventController.UserId ${widget.eventController.UserId}");
-    widget.eventController.UserId.value == widget.article.user.id
-        ? print("true")
-        : print("false");
-  }
 
 //widget.article.commentsCount
   @override
@@ -204,13 +191,11 @@ class _EventBlocBuildState extends State<EventBlocBuild> {
 
                             final result = await widget.eventController.like(
                                 widget.article.event.id, widget.article.id);
-                            print("resul likeeee");
                           } else if (widget.article.user.isLiked.value ==
                               true) {
                             widget.article.user.isLiked.toggle();
                             final result = await widget.eventController.Unlike(
                                 widget.article.event.id, widget.article.id);
-                            print("resul UNNNNUUlikeeee");
                           }
                         },
                       )),

@@ -4,6 +4,7 @@ import 'package:flutter_restart/flutter_restart.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/user_controller.dart';
 import 'package:rte_cubit/pages/enent/activnost/lenta_activnosti.dart';
+import 'package:rte_cubit/pages/oterScris/history_scan_screen.dart';
 import 'package:rte_cubit/pages/parson_draw/personal_setings.dart';
 import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/widgets/user_image_widgets.dart';
@@ -144,6 +145,13 @@ class ProfilDraws extends GetView<UserController> {
                     title: Text('Настройки профиля'),
                     onTap: () {
                       Get.to(PersonalSetings());
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.history),
+                    title: Text('История скаирования'),
+                    onTap: () {
+                      Get.to(HistoryScanScreen());
                     },
                   ),
                   ListTile(

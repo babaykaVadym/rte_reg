@@ -21,6 +21,7 @@ class EventController extends GetxController
   var pageContactTotalP = 0.obs;
   var paginEventID = 0.obs;
   var paginEventIDContact = 0.obs;
+  var eventComentTotalP = 0.obs;
 
   var oldEventList = RxList();
   var eventContactLict = List<EventContact>().obs;
@@ -31,11 +32,9 @@ class EventController extends GetxController
   final eventListComs = RxList();
   get eventListCom => this.eventListComs.value;
   set eventListCom(value) => this.eventListComs.value = value;
-  ScrollController scrollController = ScrollController();
-  ScrollController scrollControllerContact = ScrollController();
+
   var isLoading = true.obs;
   static var isLoadingEven = true.obs;
-  var isMoreDataAvailable = true.obs;
 
   var comCount = 0.obs;
   var likesPeoleCount = 0.obs;
@@ -73,8 +72,10 @@ class EventController extends GetxController
       RxStatus.success();
 
       paginEventIDContact.value = event_id;
+      if (pageContactTotalP > 1) {
+        paginateContact();
+      }
 
-      paginateContact();
       eventContactLict.value = eventContact as List<EventContact>;
       eventContactLict.refresh();
     }
@@ -89,8 +90,7 @@ class EventController extends GetxController
       if (events != null) {
         paginEventID.value = event_id;
         RxStatus.success();
-        if (pageContactTotalP.value > 1) {
-          print("7777777777777777777777777777777777777777 if");
+        if (eventComentTotalP.value > 1) {
           paginateTask();
         }
 
@@ -104,21 +104,17 @@ class EventController extends GetxController
 
   void paginateContact() async {
     for (int i = 0; i <= pageContactTotalP.value; i++) {
-      print("7777777777777777777777777777777777777777 if");
       pageContact.value++;
       await getMoreContact(paginEventIDContact.value, pageContact.value);
     }
   }
 
-  void paginateTask() {
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        page.value++;
+  void paginateTask() async {
+    for (int i = 0; i <= eventComentTotalP.value; i++) {
+      page.value++;
 
-        getMoreTask(paginEventID.value, page.value);
-      }
-    });
+      await getMoreTask(paginEventID.value, page.value);
+    }
   }
 
   showSnackBar(String title, String message) {
@@ -134,18 +130,12 @@ class EventController extends GetxController
   void getMoreTask(event_id, var page) {
     try {
       EventProvider().getEventData(event_id: event_id, page: page).then((resp) {
-        if (resp.length > 0) {
-          isMoreDataAvailable(true);
-        }
-
         eventListComs.value.addAll(resp);
         eventListComs.refresh();
       }, onError: (err) {
-        isMoreDataAvailable(false);
         showSnackBar("Error", err.toString());
       });
     } catch (exception) {
-      isMoreDataAvailable(false);
       showSnackBar("Exception", exception.toString());
     }
   }
@@ -196,7 +186,9 @@ class EventController extends GetxController
 
   sendComent({ComentModel item, event_id, coment_id}) async {
     await ComentProvider().setdComentData(event_id, coment_id, item);
-    Get.put(EventController());
+    //  Get.put(EventController());
+    page.value = 1;
+
     fetchEventsComent(event_id);
     //  this.eventListComs.refresh();
   }

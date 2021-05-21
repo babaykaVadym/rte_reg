@@ -17,7 +17,10 @@ class TicketsController extends GetxController
   var oldTicketsList = List<DatumData>().obs;
   var event_id = 0.obs;
   var tiket_id = 0.obs;
+  //var LoadDopModel = LoadDopModel.obs;
+
   var now = new DateTime.now();
+
   void fetchTickets() async {
     try {
       isLoading(true);

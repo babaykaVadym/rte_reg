@@ -38,7 +38,7 @@ class _UserImageWidgetsState extends State<UserImageWidgets> {
                   size: 35,
                 ),
                 backgroundColor: kAppBarColot,
-                maxRadius: 35,
+                maxRadius: 30,
                 minRadius: 20,
               )
             : CircleAvatar(

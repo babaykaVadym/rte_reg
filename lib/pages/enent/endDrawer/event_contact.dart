@@ -53,7 +53,6 @@ class EventContact extends GetView<EventController> {
                     ),
                     Flexible(
                       child: ListView.builder(
-                          controller: data.scrollControllerContact,
                           itemCount: data.eventContactLict.length,
                           itemBuilder: (context, index) {
                             var article = data.eventContactLict[index];

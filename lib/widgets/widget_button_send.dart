@@ -29,8 +29,8 @@ class ButtonSend extends StatelessWidget {
               event_id: controller.event_id,
               item: eventData);*/
           final result2 = await eventController.sendComent(
-              coment_id: controller.coment_id,
-              event_id: controller.event_id,
+              coment_id: controller.coment_id.value,
+              event_id: controller.event_id.value,
               item: eventData);
 
           controllerController.clear();

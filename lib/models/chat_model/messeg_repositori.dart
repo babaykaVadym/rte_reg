@@ -13,7 +13,6 @@ class MessegeReositori {
         Uri.parse(kUrlApiChat + 'chatify/fetchMessages'),
         headers: requestHeaders,
         body: json.encode(item.toJson()));
-    //, headers: requestHeaders
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body)['messages'];

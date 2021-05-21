@@ -27,7 +27,5 @@ class TicketsProvider {
             kUrlApi + 'events/$event_id/orders/$tiket_id/tickets/$hash_id'),
         headers: requestHeaders,
         body: json.encode(item.toJson()));
-
-    print(request.statusCode);
   }
 }

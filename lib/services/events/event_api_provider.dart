@@ -21,6 +21,8 @@ class EventProvider {
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body)['data'];
+      eventController.eventComentTotalP.value =
+          json.decode(response.body)['pagination']['total_pages'];
 
       return jsonResponse.map((job) => new DatumComent.fromJson(job)).toList();
     } else {
@@ -36,8 +38,6 @@ class EventProvider {
     var response = await client.get(Uri.parse(kUrlApi + 'events/$event_id'),
         headers: requestHeaders);
     var jsonString = response.body;
-    print(" 000000000000000000000000000000 $jsonString");
-    print(" 000000000000000000000000000000 ${response.statusCode}");
     var jsonMap = json.decode(jsonString);
 
     userModel = EventIdModel.fromJson(jsonMap);
@@ -66,9 +66,6 @@ class EventProvider {
         Uri.parse(kUrlApi + 'events/$event_id/posts'),
         headers: requestHeaders,
         body: json.encode(item.toJson()));
-
-    print("setEventData ${request.statusCode}");
-    print("setEventData ${request.body}");
   }
 
   Future<DatumComent> setdLike(event_id, coment_id) async {
@@ -84,7 +81,6 @@ class EventProvider {
       Uri.parse(kUrlApi + 'events/$event_id/posts/$coment_id/unlike'),
       headers: requestHeaders,
     );
-    print("setdUnLike ${request.statusCode}");
   }
 
   Future<EventModel> setEventDataIm(event_id, DatumComent item) async {
@@ -100,7 +96,7 @@ class EventProvider {
   Future<List<EventContact>> getEventContact({event_id, var page}) async {
     var client = http.Client();
     var userModel;
-    print("999999999999999999999999999999999999999999 $page");
+
     var response = await client.get(Uri.parse(
             /*kUrlApi + */ 'https://a3.rte.im/api/v1/events/$event_id/users?page=$page'),
         headers: requestHeaders);
@@ -109,8 +105,6 @@ class EventProvider {
     List jsonResponse = json.decode(response.body)['data'];
     eventController.pageContactTotalP.value =
         json.decode(response.body)['pagination']['total_pages'];
-    print(
-        " jsonMap  22222222222222222222222222222222 ${eventController.pageContactTotalP.value}");
 
     return jsonResponse.map((job) => new EventContact.fromJson(job)).toList();
   }

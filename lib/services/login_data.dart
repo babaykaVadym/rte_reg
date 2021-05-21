@@ -19,13 +19,17 @@ class LoginData {
     print('usernamess2  $mailUser');
     print('passwordss2  $password');
 
-    var response = await http.put(Uri.parse(kUrlApi + 'auth'),
+    /*var response = await http.put(Uri.parse(kUrlApi + 'auth'),
+        body: {'email': mailUser, 'password': password});
+*/
+
+    var response = await http.put(Uri.parse('https://a.rte.im/api/v1/auth'),
         body: {'email': mailUser, 'password': password});
 
     if (response.statusCode == 200) {
       var jsonData = await jsonDecode(response.body);
       Const.token = jsonData['access_token'];
-
+      print("tokent  = ${Const.token}");
       if (Const.token != null) {
         prefs.setString('usernamee', mailUser);
         prefs.setString('passwordd', password);

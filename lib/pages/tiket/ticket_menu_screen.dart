@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:rte_cubit/controllers/ticket/ticket_upgrade_controller.dart';
+import 'package:rte_cubit/controllers/ticket/tiket_dop_controler.dart';
 import 'package:rte_cubit/controllers/tickets_controller.dart';
 import 'package:rte_cubit/models/tickets_model.dart';
+import 'package:rte_cubit/pages/tiket/tiket_menu/load_dop_material.dart';
+import 'package:rte_cubit/pages/tiket/tiket_menu/ticket_upgrad_screen.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 import 'tikets_person_seting.dart';
@@ -16,7 +20,8 @@ class TicketMenuScreen extends StatefulWidget {
 
 class _TicketMenuScreenState extends State<TicketMenuScreen> {
   TicketsController ticketsController = Get.find();
-
+  TicketUpgrateController ticketUpgrateController = Get.find();
+  TicketDopController ticketdop = Get.find();
   var expansionItem;
   void _getParam() {
     for (int i = 0; i < widget.ticketModel.tickets.length + 1; i++) {
@@ -125,8 +130,14 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
                     },
                     children: [
                       ...expansionItem.map(
-                        (value) => _buildFaqRow(value, context,
-                            ticketsController, widget.ticketModel),
+                        (value) => _buildFaqRow(
+                            value,
+                            context,
+                            ticketsController,
+                            widget.ticketModel,
+                            widget.ticketModel,
+                            ticketdop,
+                            ticketUpgrateController),
                       ),
                     ],
                   ),
@@ -140,8 +151,8 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
   }
 }
 
-ExpansionPanel _buildFaqRow(
-    ExpansionItem item, context, ticketsController, ticketModel) {
+ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
+    ticketModel, widget, ticketdop, ticketUpgrateController) {
   return ExpansionPanel(
     canTapOnHeader: true,
     headerBuilder: (BuildContext context, bool isExpanded) {
@@ -202,7 +213,14 @@ ExpansionPanel _buildFaqRow(
             children: [
               Expanded(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await ticketUpgrateController.fetchUpgredaTicket(
+                        evnt_id: widget.event.id, ticket_id: widget.id);
+
+                    Get.to(TicketUpgrade(
+                      idTiket: item.tiket.id,
+                    ));
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -220,7 +238,10 @@ ExpansionPanel _buildFaqRow(
               ),
               Expanded(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print(
+                        "widget.ticketModel.event.id ${item.tiket.id.toString()}");
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -238,7 +259,17 @@ ExpansionPanel _buildFaqRow(
               ),
               Expanded(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    print("widget.ticketModel.event.id ${widget.event.id}");
+                    print("widget.ticketModel.id ${widget.id}");
+                    print(" item.hash ${item.hash}");
+
+                    await ticketdop.fetchFile(
+                        event_id: widget.event.id,
+                        tiket_id: widget.id,
+                        hash_id: item.hash);
+                    Get.to(LoadDopMaterial());
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -296,6 +327,7 @@ class ExpansionItem {
   final String hash;
   final int event_id;
   final int tiket_id;
+  final bilet_id;
   var tiket;
   bool isExpanded;
 
@@ -308,5 +340,6 @@ class ExpansionItem {
       @required this.event_id,
       @required this.tiket_id,
       @required this.tiket,
+      @required this.bilet_id,
       this.isExpanded = false});
 }

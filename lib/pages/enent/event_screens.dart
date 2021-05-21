@@ -50,16 +50,10 @@ class EventsScrents extends GetView<EventController> {
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            controller: _.scrollController,
                             itemCount: _.eventListCom.length,
                             itemBuilder: (context, index) {
-                              if (index == _.eventListCom.length - 1 &&
-                                  controller.isMoreDataAvailable.value ==
-                                      true) {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
                               // controller.fetchLikesList();
+
                               for (int i = 0;
                                   i < _.eventListCom[index].likes.length;
                                   i++) {

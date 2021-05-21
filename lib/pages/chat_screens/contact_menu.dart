@@ -46,7 +46,7 @@ class ContactMenu extends GetView<ContactController> {
 
                               return article.id != Const.UserID
                                   ? Container(
-                                      height: 50,
+                                      height: 60,
                                       margin: const EdgeInsets.all(10),
                                       child: InkWell(
                                         onTap: () async {

@@ -28,11 +28,9 @@ class UserData {
         headers: requestHeaders);
     try {
       List comentsJson = json.decode(response.body)['scans']['data'];
-      print("jsonMap $comentsJson");
+
       return comentsJson.map((json) => new Datum.fromJson(json)).toList();
-    } catch (e) {
-      print("eeeeeeeeeeeeeeeeeeeeeeeeeee $e");
-    }
+    } catch (e) {}
 
     //   return userModel;
   }
@@ -43,8 +41,5 @@ class UserData {
 
     var request = await client.put(Uri.parse(kUrlApi + 'updateProfile'),
         headers: requestHeaders, body: json.encode(item.toJson()));
-
-    print(request.body);
-    print(request.statusCode);
   }
 }
