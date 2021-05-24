@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-const String kUrlApi = "https://a.rte.im/api/v1/";
+const String kUrlApi = "https://a3.rte.im/api/v1/";
 const String kUrlApiChat = "https://a.rte.im/";
 
 Map<String, String> requestHeaders = {

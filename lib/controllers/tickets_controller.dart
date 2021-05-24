@@ -28,7 +28,7 @@ class TicketsController extends GetxController
       if (tickets != null) {
         change(value, status: RxStatus.success());
         ticketsList.value = tickets as List<DatumData>;
-        // LoadScrepss().RunTikets();
+
         oldTicketsList.value.clear();
         newTicketsList.value.clear();
         byingTicketsList.value.clear();

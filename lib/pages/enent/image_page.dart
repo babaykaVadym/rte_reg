@@ -13,7 +13,7 @@ class ImagePage extends StatelessWidget {
         },
         child: Image.network(
           urll,
-          fit: BoxFit.contain,
+          //fit: BoxFit.fitWidth,
         ),
       ),
     );

@@ -60,10 +60,11 @@ class LoadScrepss {
 
     await userController.fetchUserContats();
     print(
-        "userController.value.id  userController.value.id  ${userController.value.id.toString()}");
-    eventController.UserId.value =
-        userController.value.id == null ? 0 : userController.value.id;
-    Const.UserID = userController.value.id;
-    comentController.UserId.value = userController.value.id;
+        "userController.value.id  userController.value.id  ${userController.UserD.value.id.toString()}");
+    eventController.UserId.value = userController.UserD.value.id == null
+        ? 0
+        : userController.UserD.value.id;
+    Const.UserID = userController.UserD.value.id;
+    comentController.UserId.value = userController.UserD.value.id;
   }
 }

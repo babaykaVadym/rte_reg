@@ -23,6 +23,8 @@ class UserModel {
     this.events,
     this.company,
     this.parents,
+    this.uScanned,
+    this.uScannedBy,
     this.children,
     this.email,
     this.role,
@@ -43,6 +45,8 @@ class UserModel {
   String telephoneNumber;
   int isCheckIn;
   int isPrintSticker;
+  List<UScanned> uScanned;
+  List<dynamic> uScannedBy;
   String telephoneFullNumber;
   dynamic customFields;
   List<dynamic> events;
@@ -85,6 +89,13 @@ class UserModel {
         mailCreditBalance: json["mail_credit_balance"],
         logs: List<dynamic>.from(json["logs"].map((x) => x)),
         balanceInfo: List<dynamic>.from(json["balance_info"].map((x) => x)),
+        uScanned: json["u_scanned"] == null
+            ? ""
+            : List<UScanned>.from(
+                json["u_scanned"].map((x) => UScanned.fromJson(x))),
+        uScannedBy: json["u_scanned_by"] == null
+            ? ""
+            : List<dynamic>.from(json["u_scanned_by"].map((x) => x)),
         scans: Scans.fromJson(json["scans"]),
       );
 
@@ -238,6 +249,7 @@ class Datum {
     this.email,
     this.company,
     this.position,
+    this.avatar,
   });
 
   int id;
@@ -249,6 +261,7 @@ class Datum {
   String email;
   String company;
   String position;
+  String avatar;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -260,6 +273,9 @@ class Datum {
         email: json["email"],
         company: json["company"] == null ? '' : json["company"],
         position: json["position"] == null ? '' : json["position"],
+        avatar: json["avatar"] == null
+            ? "https://a3.rte.im/storage/avatar.png"
+            : json["avatar"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -336,6 +352,62 @@ class Pagination {
       };
 }
 
+class UScanned {
+  UScanned({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.telephoneCode,
+    this.telephoneNumber,
+    this.telephoneFullNumber,
+    this.email,
+    this.company,
+    this.position,
+    this.avatar,
+  });
+
+  int id;
+  String firstName;
+  String lastName;
+  String telephoneCode;
+  String telephoneNumber;
+  String telephoneFullNumber;
+  String email;
+  String company;
+  String position;
+  String avatar;
+
+  factory UScanned.fromJson(Map<String, dynamic> json) => UScanned(
+        id: json["id"] == null ? null : json["id"],
+        firstName: json["first_name"] == null ? null : json["first_name"],
+        lastName: json["last_name"] == null ? null : json["last_name"],
+        telephoneCode:
+            json["telephone_code"] == null ? null : json["telephone_code"],
+        telephoneNumber:
+            json["telephone_number"] == null ? null : json["telephone_number"],
+        telephoneFullNumber: json["telephone_full_number"] == null
+            ? null
+            : json["telephone_full_number"],
+        email: json["email"] == null ? null : json["email"],
+        company: json["company"] == null ? null : json["company"],
+        position: json["position"] == null ? null : json["position"],
+        avatar: json["avatar"] == null ? null : json["avatar"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id == null ? null : id,
+        "first_name": firstName == null ? null : firstName,
+        "last_name": lastName == null ? null : lastName,
+        "telephone_code": telephoneCode == null ? null : telephoneCode,
+        "telephone_number": telephoneNumber == null ? null : telephoneNumber,
+        "telephone_full_number":
+            telephoneFullNumber == null ? null : telephoneFullNumber,
+        "email": email == null ? null : email,
+        "company": company == null ? null : company,
+        "position": position == null ? null : position,
+      };
+}
+
 class EnumValues<T> {
   Map<String, T> map;
   Map<T, String> reverseMap;
@@ -348,6 +420,21 @@ class EnumValues<T> {
     }
     return reverseMap;
   }
+}
+
+class UserFotoUpdate {
+  UserFotoUpdate({
+    this.avatar,
+    this.type,
+  });
+
+  String avatar;
+  String type;
+
+  Map<String, dynamic> toJson() => {
+        "avatar": avatar == null ? "" : avatar,
+        "type": type == null ? "" : type,
+      };
 }
 
 class UserUodate {

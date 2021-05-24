@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 List<UpgradeTicketModel> upgradeTicketModelFromJson(String str) =>
     List<UpgradeTicketModel>.from(
         json.decode(str).map((x) => UpgradeTicketModel.fromJson(x)));
@@ -54,7 +56,7 @@ class OptionUpgrade {
     this.price,
     this.isUpgradeOption,
   });
-
+  var activeBtn = false.obs;
   int id;
   String option;
   String price;
@@ -87,7 +89,7 @@ class TicketSchemaUpgrade {
     this.allAvailableAmount,
     this.availableAmount,
   });
-
+  var activeBtnSchema = false.obs;
   int id;
   String price;
   int active;

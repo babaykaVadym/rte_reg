@@ -132,7 +132,7 @@ class Event {
     this.eventStart,
     this.eventEnd,
     this.owner,
-    this.setting,
+    //  this.setting,
     this.logoUrl,
     this.logoType,
     //   this.subwayStation,
@@ -155,7 +155,7 @@ class Event {
   DateTime eventStart;
   DateTime eventEnd;
   Creator owner;
-  Setting setting;
+//  Setting setting;
   String logoUrl;
   String logoType;
   // String subwayStation;
@@ -178,7 +178,7 @@ class Event {
         eventStart: DateTime.parse(json["event_start"]),
         eventEnd: DateTime.parse(json["event_end"]),
         owner: Creator.fromJson(json["owner"]),
-        setting: Setting.fromJson(json["setting"]),
+        //  setting: Setting.fromJson(json["setting"]),
         logoUrl: json["logo"],
         logoType: json["logo_type"],
         //    subwayStation: json["subway_station"],
@@ -202,7 +202,7 @@ class Event {
         "event_start": eventStart.toIso8601String(),
         "event_end": eventEnd.toIso8601String(),
         "owner": owner.toJson(),
-        "setting": setting.toJson(),
+        //  "setting": setting.toJson(),
         "logo": logoUrl,
         "logo_type": logoType,
         //   "subway_station": subwayStation,
@@ -282,7 +282,7 @@ class Setting {
     this.subject,
     this.recountCurrency,
     this.paymentCurrency,
-    this.checkIn,
+    // this.checkIn,
     this.language,
     this.country,
     this.fixCommission,
@@ -312,7 +312,7 @@ class Setting {
   Subject subject;
   dynamic recountCurrency;
   Language paymentCurrency;
-  CheckIn checkIn;
+  // CheckIn checkIn;
   Language language;
   Country country;
   dynamic fixCommission;
@@ -342,9 +342,9 @@ class Setting {
         subject: Subject.fromJson(json["subject"]),
         recountCurrency: json["recount_currency"],
         paymentCurrency: Language.fromJson(json["payment_currency"]),
-        checkIn: json["check_in"] == null
+        /*  checkIn: json["check_in"] == null
             ? null
-            : CheckIn.fromJson(json["check_in"]),
+            : CheckIn.fromJson(json["check_in"]),*/
         language: Language.fromJson(json["language"]),
         country: Country.fromJson(json["country"]),
         fixCommission: json["fix_commission"],
@@ -382,7 +382,7 @@ class Setting {
         "subject": subject.toJson(),
         "recount_currency": recountCurrency,
         "payment_currency": paymentCurrency.toJson(),
-        "check_in": checkIn == null ? null : checkIn.toJson(),
+        //  "check_in": checkIn == null ? null : checkIn.toJson(),
         "language": language.toJson(),
         "country": country.toJson(),
         "fix_commission": fixCommission,
@@ -432,94 +432,6 @@ class Category {
         "id": id,
         "name": name,
         "category": category,
-      };
-}
-
-class CheckIn {
-  CheckIn({
-    this.width,
-    //   this.height,
-    this.isPost,
-    this.eventId,
-    this.isQrCode,
-    this.isCompany,
-    this.isOptions,
-    this.marginTop,
-    this.marginLeft,
-    this.marginRight,
-    this.qrCodeWidth,
-    this.isTicketType,
-    this.marginBottom,
-    /*this.nameFontSize,
-    this.postFontSize,
-    this.companyFontSize,
-    this.optionsFontSize,
-    this.lastNameFontSize,
-    this.ticketTypeFontSize,*/
-  });
-
-  int width;
-  // String height;
-  bool isPost;
-  int eventId;
-  bool isQrCode;
-  bool isCompany;
-  bool isOptions;
-  int marginTop;
-  int marginLeft;
-  int marginRight;
-  var qrCodeWidth;
-  bool isTicketType;
-  int marginBottom;
-/*  String nameFontSize;
-  String postFontSize;
-  String companyFontSize;
-  String optionsFontSize;
-  String lastNameFontSize;
-  String ticketTypeFontSize;*/
-
-  factory CheckIn.fromJson(Map<String, dynamic> json) => CheckIn(
-        width: json["width"],
-        //  height: json["height"],
-        isPost: json["isPost"],
-        eventId: json["event_id"],
-        isQrCode: json["isQrCode"],
-        isCompany: json["isCompany"],
-        isOptions: json["isOptions"],
-        marginTop: json["marginTop"],
-        marginLeft: json["marginLeft"],
-        marginRight: json["marginRight"],
-        qrCodeWidth: json["qrCodeWidth"],
-        isTicketType: json["isTicketType"],
-        marginBottom: json["marginBottom"],
-        /*  nameFontSize: json["nameFontSize"],
-        postFontSize: json["postFontSize"],
-        companyFontSize: json["companyFontSize"],
-        optionsFontSize: json["optionsFontSize"],
-        lastNameFontSize: json["lastNameFontSize"],
-        ticketTypeFontSize: json["ticketTypeFontSize"],*/
-      );
-
-  Map<String, dynamic> toJson() => {
-        "width": width,
-        // "height": height,
-        "isPost": isPost,
-        "event_id": eventId,
-        "isQrCode": isQrCode,
-        "isCompany": isCompany,
-        "isOptions": isOptions,
-        "marginTop": marginTop,
-        "marginLeft": marginLeft,
-        "marginRight": marginRight,
-        "qrCodeWidth": qrCodeWidth,
-        "isTicketType": isTicketType,
-        "marginBottom": marginBottom,
-        /*  "nameFontSize": nameFontSize,
-        "postFontSize": postFontSize,
-        "companyFontSize": companyFontSize,
-        "optionsFontSize": optionsFontSize,
-        "lastNameFontSize": lastNameFontSize,
-        "ticketTypeFontSize": ticketTypeFontSize,*/
       };
 }
 
@@ -651,7 +563,7 @@ class Ticket {
     this.price,
     this.createdAt,
     this.updatedAt,
-    this.checkIn,
+    //  this.checkIn,
   });
 
   int id;
@@ -662,7 +574,7 @@ class Ticket {
   String price;
   DateTime createdAt;
   DateTime updatedAt;
-  List<dynamic> checkIn;
+  // List<dynamic> checkIn;
 
   factory Ticket.fromJson(Map<String, dynamic> json) => Ticket(
         id: json["id"],
@@ -673,7 +585,7 @@ class Ticket {
         price: json["price"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        checkIn: List<dynamic>.from(json["check_in"].map((x) => x)),
+        //  checkIn: List<dynamic>.from(json["check_in"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {

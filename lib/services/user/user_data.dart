@@ -41,5 +41,8 @@ class UserData {
 
     var request = await client.put(Uri.parse(kUrlApi + 'updateProfile'),
         headers: requestHeaders, body: json.encode(item.toJson()));
+
+    print(request.statusCode);
+    print(request.body);
   }
 }

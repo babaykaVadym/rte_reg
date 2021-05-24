@@ -23,10 +23,10 @@ final kLightTheme = ThemeData(
         fontSize: 20,
         color: kTextColors),
     headline2: TextStyle(
-      fontFamily: "Roboto",
-      fontWeight: FontWeight.w400,
-      fontSize: 16,
-    ),
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+        color: kTextColors),
     subtitle1: TextStyle(
       fontFamily: "Roboto",
       fontWeight: FontWeight.w400,

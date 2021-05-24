@@ -108,4 +108,20 @@ class EventProvider {
 
     return jsonResponse.map((job) => new EventContact.fromJson(job)).toList();
   }
+
+  Future<DatumComent> getEventDb({event_id, post_id}) async {
+    var client = http.Client();
+    var userModel;
+
+    var response = await client.get(
+        Uri.parse(kUrlApi + 'events/$event_id/posts/$post_id'),
+        headers: requestHeaders);
+    var jsonString = response.body;
+
+    var jsonMap = json.decode(jsonString);
+
+    userModel = DatumComent.fromJson(jsonMap);
+    //print(jsonMap);
+    return userModel;
+  }
 }

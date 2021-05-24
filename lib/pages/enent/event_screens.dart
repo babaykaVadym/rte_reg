@@ -65,8 +65,9 @@ class EventsScrents extends GetView<EventController> {
                               }
 
                               return EventBlocBuild(
-                                article: _.eventListCom[index],
+                                article: _.eventListComs[index],
                                 eventController: controller,
+                                isDB: false,
                               );
                             }),
                       ),

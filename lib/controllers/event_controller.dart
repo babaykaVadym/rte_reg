@@ -9,7 +9,7 @@ import 'package:rte_cubit/services/events/event_api_provider.dart';
 class EventController extends GetxController
     with StateMixin<List<DatumComent>> {
   var event_id_List = List<int>().obs;
-
+  var event_id_db_List = List<int>().obs;
   var image;
   var page = 1.obs;
   var maxPage = 0.obs;
@@ -32,7 +32,7 @@ class EventController extends GetxController
   final eventListComs = RxList();
   get eventListCom => this.eventListComs.value;
   set eventListCom(value) => this.eventListComs.value = value;
-
+  var eventDBList = List<DatumComent>().obs;
   var isLoading = true.obs;
   static var isLoadingEven = true.obs;
 
@@ -49,8 +49,7 @@ class EventController extends GetxController
         var events = await EventProvider().getEventIdData(event_id_List[n]);
         if (events != null) {
           RxStatus.success();
-          print(
-              "events.eventStart events.eventStart 22222222222222222222222  ${events.eventStart}");
+
           if (events.eventEnd.millisecondsSinceEpoch <=
               now.millisecondsSinceEpoch) {
             oldEventList.value.add(events);
@@ -180,8 +179,6 @@ class EventController extends GetxController
   Unlike(event_id, coment_id) async {
     await EventProvider().setdUnLike(event_id, coment_id);
     fetchEventsComent(event_id);
-    //this.eventListComs.refresh();
-    //  eventListM.refresh();
   }
 
   sendComent({ComentModel item, event_id, coment_id}) async {
@@ -190,6 +187,20 @@ class EventController extends GetxController
     page.value = 1;
 
     fetchEventsComent(event_id);
-    //  this.eventListComs.refresh();
+  }
+
+  void fetchIdDBEvents({enet_id, post_id}) async {
+    try {
+      isLoading(true);
+
+      var events =
+          await EventProvider().getEventDb(event_id: enet_id, post_id: post_id);
+      if (events != null) {
+        // RxStatus.success();
+        eventDBList.value.add(events);
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 }

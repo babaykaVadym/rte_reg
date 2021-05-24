@@ -9,15 +9,18 @@ class PersonScreen extends StatelessWidget {
   String nameSecPerson;
   String mailPerson;
   String telephone, company;
+  String avatar;
 
   int UserId;
-  PersonScreen(
-      {@required this.namePerson,
-      @required this.mailPerson,
-      @required this.telephone,
-      @required this.company,
-      @required this.UserId,
-      @required this.nameSecPerson});
+  PersonScreen({
+    @required this.namePerson,
+    @required this.mailPerson,
+    @required this.telephone,
+    @required this.company,
+    @required this.UserId,
+    @required this.nameSecPerson,
+    @required this.avatar,
+  });
   MessegeController messegeController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -53,9 +56,22 @@ class PersonScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CircleAvatar(
-              backgroundColor: Colors.blue,
-              radius: 45,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  width: MediaQuery.of(context).size.height / 4,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(36),
+                    child: // Icon(Icons.perm_identity),
+                        Image.network(
+                      avatar,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 10,
@@ -64,7 +80,7 @@ class PersonScreen extends StatelessWidget {
               child: Text(
                 '$namePerson $nameSecPerson',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),

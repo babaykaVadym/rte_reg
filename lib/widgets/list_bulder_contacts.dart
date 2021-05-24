@@ -12,7 +12,7 @@ class ListBuilContacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: 60,
       margin: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {
@@ -25,19 +25,28 @@ class ListBuilContacts extends StatelessWidget {
               company: data.company == null ? "" : data.company,
               UserId: data.id,
               nameSecPerson: data.lastName,
+              avatar: data.avatar == "https://a.rte.im/storage/avatar.png"
+                  ? "https://a3.rte.im/storage/avatar.png"
+                  : data.avatar,
             );
           }));
         },
         child: Row(
           children: [
-            ClipRRect(
+            Container(
+              height: MediaQuery.of(context).size.height / 12,
+              width: MediaQuery.of(context).size.width / 7,
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(36),
-                child: Icon(Icons.perm_identity)
-                /*Image.network(
-                data.avatar,
-                fit: BoxFit.cover,
-              ),*/
+                child: // Icon(Icons.perm_identity),
+                    Image.network(
+                  data.avatar == "https://a.rte.im/storage/avatar.png"
+                      ? "https://a3.rte.im/storage/avatar.png"
+                      : data.avatar,
+                  fit: BoxFit.cover,
                 ),
+              ),
+            ),
             SizedBox(width: 20),
             Flexible(
               child: Column(

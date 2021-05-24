@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
 import 'package:rte_cubit/controllers/tickets_controller.dart';
 import 'package:rte_cubit/pages/tiket/ticket_menu_screen.dart';
-import 'package:rte_cubit/widgets/user_image_widgets.dart';
+import 'package:rte_cubit/services/getLoadNotif.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
@@ -38,21 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
   TicketsController ticketsController = Get.find();
   EventController eventController = Get.find();
 
-  Future LoadImg() async {
-    final SharedPreferences prefs = await _prefs;
-    String _imgString = await prefs.getString("img64");
-
-    if (_imgString != null) {
-      UserImageWidgets.bytes = Base64Decoder().convert(_imgString);
-    }
-  }
-
   @override
   void initState() {
-    LoadImg();
-    // TODO: implement initState
-    print(
-        "11111111111111111111111111111111111111111111111111 ${ticketsController.newTicketsList.isEmpty}");
+    GetLoadNotif().getId();
     super.initState();
   }
 
@@ -111,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? Container()
                         : Column(
                             children: [
-                              Text("Неоплаченные билеты:"),
+                              Text("Оплаченные билеты:"),
                               _eventWidg(ticketsController.byingTicketsList),
                             ],
                           ),

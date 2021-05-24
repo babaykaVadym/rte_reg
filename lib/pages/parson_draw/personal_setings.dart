@@ -6,9 +6,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/user_controller.dart';
 import 'package:rte_cubit/models/user_model.dart';
+import 'package:rte_cubit/pages/enent/image_page.dart';
 import 'package:rte_cubit/pages/parson_draw/pers_seting_imag_load.dart';
 import 'package:rte_cubit/services/consts.dart';
-import 'package:rte_cubit/widgets/user_image_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -32,152 +32,180 @@ class PersonalSetings extends GetView<UserController> {
           style: TextStyle(color: kTextColors),
         ),
       ),
-      body: controller.obx(
-        (data) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Ваше фото:",
-              style: TextStyle(fontSize: 15),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                UserImageWidgets(),
-                Flexible(child: Container()),
-                TextButton(
-                    onPressed: () {
-                      Get.to(ImageLoaded());
-                    },
-                    child: Text("Загрузить фото")),
-              ],
-            ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Form(
-                    child: ListView(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Фамилия:"),
-                        TextFormField(
-                          controller: _lastNameController,
-                          decoration: InputDecoration(
-                            labelText: data.lastName,
+      body: GetX<UserController>(
+          initState: (state) => Get.find<UserController>(),
+          builder: (controller) {
+            var data = controller.UserD.value;
+            print(controller.UserD.value.id.toString());
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Ваше фото:",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Get.to(ImagePage(
+                              urll: data.avatar,
+                            )),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height / 10,
+                              width: MediaQuery.of(context).size.height / 10,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.network(
+                                  data.avatar,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                          Flexible(child: Container()),
+                          TextButton(
+                              onPressed: () {
+                                Get.to(ImageLoaded());
+                              },
+                              child: Text("Загрузить фото")),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Form(
+                        child: ListView(
                       children: [
-                        Text("Имя:"),
-                        TextFormField(
-                          controller: _nameController,
-                          decoration: InputDecoration(
-                            labelText: data.firstName,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Фамилия:"),
+                            TextFormField(
+                              controller: _lastNameController,
+                              decoration: InputDecoration(
+                                labelText: data.lastName,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("E-mail:"),
-                        TextFormField(
-                          controller: _mailController,
-                          decoration: InputDecoration(labelText: data.email),
-                          keyboardType: TextInputType.emailAddress,
+                        SizedBox(
+                          height: 5,
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Контактный номер:"),
-                        TextFormField(
-                          controller: _phoneController,
-                          decoration: InputDecoration(
-                            labelText: data.telephoneNumber,
-                          ),
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Имя:"),
+                            TextFormField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                labelText: data.firstName,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("E-mail:"),
+                            TextFormField(
+                              controller: _mailController,
+                              decoration:
+                                  InputDecoration(labelText: data.email),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Контактный номер:"),
+                            TextFormField(
+                              controller: _phoneController,
+                              decoration: InputDecoration(
+                                labelText: data.telephoneNumber,
+                              ),
+                              keyboardType: TextInputType.phone,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Пароль:"),
+                            TextFormField(
+                              controller: _passwordController,
+                              decoration: InputDecoration(labelText: "Пароль"),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Компания:"),
+                            TextFormField(
+                              controller: _companyController,
+                              decoration: InputDecoration(
+                                labelText: data.company,
+                              ),
+                            ),
                           ],
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Пароль:"),
-                        TextFormField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(labelText: "Пароль"),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Компания:"),
-                        TextFormField(
-                          controller: _companyController,
-                          decoration: InputDecoration(
-                            labelText: data.company,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height / 15,
-                  width: MediaQuery.of(context).size.width / 2,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        MediaQuery.of(context).size.height / 2.23),
-                    color: kYellowColor,
+                    )),
                   ),
-                  child: TextButton(
-                      onPressed: () async {
-                        passW(data, context);
-                      },
-                      child: Text(
-                        "Сохранить",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      )),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height / 15,
+                      width: MediaQuery.of(context).size.width / 2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            MediaQuery.of(context).size.height / 2.23),
+                        color: kYellowColor,
+                      ),
+                      child: TextButton(
+                          onPressed: () async {
+                            passW(data, context);
+                          },
+                          child: Text(
+                            "Сохранить",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
                 )
               ],
-            ),
-            SizedBox(
-              height: 5,
-            )
-          ],
-        ),
-      ),
+            );
+          }),
     );
   }
 

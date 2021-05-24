@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rte_cubit/controllers/user_controller.dart';
+import 'package:rte_cubit/models/user_model.dart';
 import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/widgets/user_image_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,28 +61,6 @@ class _ImageLoadedState extends State<ImageLoaded> {
     Get.back();
   }
 
-  /*Future SaveImg() async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    final File newImage = await _image.copy('$appDocPath/logo.png');
-    print(newImage);
-    setState(() {
-      UserController.imgPath = newImage;
-      userController.fetchUserLogo();
-      Get.off(HomeScreen());
-    });
-  }*/
-
-  /* Future loadImg() async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    final File newImage = await File('$appDocPath/logo.png');
-    print(image2);
-    setState(() {
-      image2 = newImage;
-    });
-  }
-*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,8 +109,16 @@ class _ImageLoadedState extends State<ImageLoaded> {
             ],
           ),
           TextButton(
-              onPressed: () {
-                SaveImg();
+              onPressed: () async {
+                //SaveImg();
+                File file = File(_image.path);
+                Uint8List bytes = file.readAsBytesSync();
+
+                String img64 = base64Encode(bytes);
+                final fotoData = UserFotoUpdate(avatar: img64, type: "png");
+                final result =
+                    await UserController().updateUserProfile(fotoData);
+                userController.onInit();
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

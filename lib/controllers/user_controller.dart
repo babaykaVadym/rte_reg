@@ -5,7 +5,7 @@ import 'package:rte_cubit/models/user_model.dart';
 import 'file:///D:/__flutter/rte_cubit/lib/services/user/user_data.dart';
 
 class UserController extends GetxController with StateMixin<UserModel> {
-  //var UserDataCont = UserModel.obs;
+  var UserD = UserModel().obs;
   static var imgPath;
 
   var loGos = "s".obs;
@@ -13,18 +13,30 @@ class UserController extends GetxController with StateMixin<UserModel> {
   get contacttList => this.userContactDat.value;
   set contacttList(value) => this.userContactDat.value = value;
 
-  @override
+  var btnUScan = false.obs;
+  var btnUScanBy = false.obs;
+  var menuBtn = true.obs;
+
+  /* @override
   void onInit() {
     super.onInit();
-    UserData().getUserData().then((value) {
+       var user =  UserData().getUserData().then((value) {
       change(value, status: RxStatus.success());
-      //
+     UserD =
     }, onError: (err) {
       change(
         null,
         status: RxStatus.error(err.toString()),
       );
     });
+  }*/
+
+  @override
+  void onInit() async {
+    super.onInit();
+    var user = await UserData().getUserData();
+
+    UserD.value = user;
   }
 
   /*void fetchUserLogo() async {
@@ -49,7 +61,6 @@ class UserController extends GetxController with StateMixin<UserModel> {
 
   void updateUserProfile(var item) async {
     var events = await UserData().setUserData(item);
-    onInit();
   }
 
   /* void fetchUserData() async {
