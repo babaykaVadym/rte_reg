@@ -62,6 +62,14 @@ class DatabaseHelper {
     return res;
   }
 
+  Future<int> deleteUsersId(id) async {
+    var dbClient = await db;
+
+    int res =
+        await dbClient.rawDelete('DELETE FROM User WHERE userId = ?', [id]);
+    return res;
+  }
+
   /*Future<bool> update(DataBaseMaodel user) async {
     var dbClient = await db;
 

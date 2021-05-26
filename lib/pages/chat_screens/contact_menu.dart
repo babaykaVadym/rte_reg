@@ -14,7 +14,7 @@ class ContactMenu extends GetView<ContactController> {
   static appBar(context) => AppBar(
         centerTitle: true,
         title: Text(
-          "ChatPage",
+          "Чат",
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [

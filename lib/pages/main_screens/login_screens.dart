@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/services/login_data.dart';
+import 'package:rte_cubit/widgets/scan_bar.dart';
 
 class LoginScreens extends StatefulWidget {
   @override
@@ -15,20 +16,17 @@ class _LoginScreensState extends State<LoginScreens> {
 
   String mailUser;
   String password;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   readValues() {
     if (password.length > 3 && mailUser.contains('@') == true) {
       print(Const.token);
       conect();
     } else {
-      scaffoldKey.currentState.showSnackBar(SnackBar(
-          backgroundColor: Colors.red,
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Логин или пароль неверный"),
-            ],
-          )));
+      snacBars(
+          color: Colors.red,
+          context: context,
+          text: "Логин или пароль неверный",
+          duration: Duration(milliseconds: 1200));
 
       Timer(Duration(milliseconds: 800), () {
         setState(() {
@@ -40,13 +38,12 @@ class _LoginScreensState extends State<LoginScreens> {
 
   conect() {
     LoginData()
-        .loginData(mailUser: mailUser, password: password, key: scaffoldKey);
+        .loginData(mailUser: mailUser, password: password, context: context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(

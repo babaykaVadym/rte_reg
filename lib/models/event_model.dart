@@ -10,21 +10,17 @@ String eventModelToJson(EventModel data) => json.encode(data.toJson());
 class EventModel {
   EventModel({
     this.data,
-    this.pagination,
   });
 
   List<DatumComent> data;
-  Pagination pagination;
 
   factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
         data: List<DatumComent>.from(
             json["data"].map((x) => DatumComent.fromJson(x))),
-        pagination: Pagination.fromJson(json["pagination"]),
       );
 
   Map<String, dynamic> toJson() => {
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "pagination": pagination.toJson(),
       };
 }
 
@@ -126,7 +122,7 @@ class Event {
     this.createdAt,
     this.updatedAt,
     this.logoUrl,
-    this.logo,
+    // this.logo,
   });
 
   int id;
@@ -146,7 +142,7 @@ class Event {
   DateTime createdAt;
   DateTime updatedAt;
   String logoUrl;
-  Logo logo;
+  // Logo logo;
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
         id: json["id"],
@@ -166,32 +162,11 @@ class Event {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         logoUrl: json["logo_url"],
-        logo: Logo.fromJson(json["logo"]),
+        // logo: Logo.fromJson(json["logo"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "address": address,
-        "address_lat": addressLat,
-        "address_lng": addressLng,
-        "setting_id": settingId,
-        "registration_start": registrationStart.toIso8601String(),
-        "registration_end": registrationEnd.toIso8601String(),
-        "event_start": eventStart.toIso8601String(),
-        "event_end": eventEnd.toIso8601String(),
-        "subway_station": subwayStation,
-        "location_name": locationName,
-        "deleted_at": deletedAt,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "logo_url": logoUrl,
-        "logo": logo.toJson(),
-      };
 }
 
-class Logo {
+/*class Logo {
   Logo({
     this.id,
     this.type,
@@ -229,7 +204,7 @@ class Logo {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };
-}
+}*/
 
 class User {
   User({
@@ -259,7 +234,6 @@ class User {
     this.code,
     this.avatarUrl,
     this.telephoneFullNumber,
-    this.pivot,
   });
   var isLiked = false.obs;
   int id;
@@ -288,7 +262,6 @@ class User {
   dynamic code;
   String avatarUrl;
   String telephoneFullNumber;
-  Pivot pivot;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -323,88 +296,5 @@ class User {
         code: json["code"],
         avatarUrl: json["avatar_url"],
         telephoneFullNumber: json["telephone_full_number"],
-        pivot: json["pivot"] == null ? null : Pivot.fromJson(json["pivot"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName == null ? null : firstName,
-        "last_name": lastName,
-        "email": email,
-        "active_status": activeStatus,
-        "dark_mode": darkMode,
-        "messenger_color": messengerColor,
-        "avatar": avatar,
-        "company": company,
-        "telephone_code": telephoneCode == null ? null : telephoneCode,
-        "telephone_number": telephoneNumber == null ? null : telephoneNumber,
-        "verified": verified,
-        "verification_token": verificationToken,
-        "reset_token": resetToken,
-        "active": active,
-        "deleted_at": deletedAt,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
-        "role_id": roleId,
-        "mail_credit_balance": mailCreditBalance,
-        "custom_fields": customFields,
-        "is_print_sticker": isPrintSticker,
-        "is_check_in": isCheckIn,
-        "code": code,
-        "avatar_url": avatarUrl,
-        "telephone_full_number": telephoneFullNumber,
-        "pivot": pivot == null ? null : pivot.toJson(),
-      };
-}
-
-class Pivot {
-  Pivot({
-    this.postId,
-    this.userId,
-  });
-
-  int postId;
-  int userId;
-
-  factory Pivot.fromJson(Map<String, dynamic> json) => Pivot(
-        postId: json["post_id"],
-        userId: json["user_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "post_id": postId,
-        "user_id": userId,
-      };
-}
-
-class Pagination {
-  Pagination({
-    this.total,
-    this.currentPage,
-    this.totalPages,
-    this.count,
-    this.perPage,
-  });
-
-  int total;
-  int currentPage;
-  int totalPages;
-  int count;
-  String perPage;
-
-  factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
-        total: json["total"],
-        currentPage: json["current_page"],
-        totalPages: json["total_pages"],
-        count: json["count"],
-        perPage: json["per_page"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "total": total,
-        "current_page": currentPage,
-        "total_pages": totalPages,
-        "count": count,
-        "per_page": perPage,
-      };
 }

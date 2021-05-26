@@ -10,14 +10,13 @@ import 'package:rte_cubit/controllers/event_controller.dart';
 import 'package:rte_cubit/models/event_model.dart';
 import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/services/scripts/ipagePikerCreater.dart';
-import 'package:rte_cubit/widgets/user_image_widgets.dart';
+import 'package:rte_cubit/widgets/scan_bar.dart';
 
 class InputText extends StatefulWidget {
   var imageFile;
   var event_id;
-  var scaffoldKeys;
 
-  InputText({this.event_id, this.imageFile, this.scaffoldKeys});
+  InputText({this.event_id, this.imageFile});
   @override
   _InputTextState createState() => _InputTextState();
 }
@@ -25,13 +24,27 @@ class InputText extends StatefulWidget {
 class _InputTextState extends State<InputText> {
   bool activeBtn = true;
   EventController controller = Get.find();
+
   var controllerT = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    controller.userAvatar.refresh();
     return Container(
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-        UserImageWidgets(),
-
+        Container(
+          height: MediaQuery.of(context).size.height / 10,
+          width: MediaQuery.of(context).size.width / 9,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.network(
+              controller.userAvatar.value,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 2,
+        ),
         GestureDetector(
           onTap: () {
             showModalBottomSheet(
@@ -138,7 +151,11 @@ class _InputTextState extends State<InputText> {
                       print(
                           "description: widget.controllerT.text == null ${controllerT.text.isEmpty}");
                       if (controllerT.text.isEmpty) {
-                        snacBars(text: "Введите подпись!", color: Colors.red);
+                        snacBars(
+                            text: "Введите подпись!",
+                            color: Colors.red,
+                            context: context,
+                            duration: Duration(milliseconds: 600));
                       } else {
                         setState(() {
                           activeBtn = false;
@@ -150,7 +167,10 @@ class _InputTextState extends State<InputText> {
                           controller.image = null;
                         });
                         snacBars(
-                            text: "Публикация поста", color: Colors.green[100]);
+                            text: "Публикация поста",
+                            color: Colors.green[100],
+                            context: context,
+                            duration: Duration(milliseconds: 600));
                         final eventData = DatumComent(
                             description: controllerT.text,
                             imageUrl: img64,
@@ -175,7 +195,10 @@ class _InputTextState extends State<InputText> {
                         description: controllerT.text.toString(),
                       );
                       snacBars(
-                          text: "Публикация поста", color: Colors.green[100]);
+                          text: "Публикация поста",
+                          color: Colors.green[100],
+                          context: context,
+                          duration: Duration(milliseconds: 600));
                       final result = await controller.sendTxt(
                           item: eventData, event_id: widget.event_id);
 
@@ -205,20 +228,5 @@ class _InputTextState extends State<InputText> {
               ),
       ]),
     );
-  }
-
-  snacBars({text, color}) {
-    widget.scaffoldKeys.currentState.showSnackBar(SnackBar(
-        backgroundColor: color,
-        duration: Duration(milliseconds: 500),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: TextStyle(fontSize: 18),
-            ),
-          ],
-        )));
   }
 }

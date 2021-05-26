@@ -5,7 +5,7 @@ import 'package:rte_cubit/models/user_model.dart';
 import 'package:rte_cubit/services/consts.dart';
 
 class UserData {
-  List<UserData> userData = [];
+  // UserController userController = Get.find();
 
   Future<UserModel> getUserData() async {
     var client = http.Client();
@@ -13,26 +13,13 @@ class UserData {
 
     var response = await client.get(Uri.parse(kUrlApi + 'showProfile?page=1'),
         headers: requestHeaders);
-
+    print(response.statusCode);
+    print(response.body);
     var jsonString = response.body;
     var jsonMap = json.decode(jsonString);
     userModel = UserModel.fromJson(jsonMap);
 
     return userModel;
-  }
-
-  Future<List<Datum>> getContactUserData() async {
-    var client = http.Client();
-
-    var response = await client.get(Uri.parse(kUrlApi + 'showProfile?page=1'),
-        headers: requestHeaders);
-    try {
-      List comentsJson = json.decode(response.body)['scans']['data'];
-
-      return comentsJson.map((json) => new Datum.fromJson(json)).toList();
-    } catch (e) {}
-
-    //   return userModel;
   }
 
   Future<UserModel> setUserData(var item) async {
@@ -44,5 +31,31 @@ class UserData {
 
     print(request.statusCode);
     print(request.body);
+  }
+
+  Future<UserModel> getIdUser(id) async {
+    var client = http.Client();
+    var userModel;
+
+    var response = await client.get(Uri.parse(kUrlApi + 'users/$id'),
+        headers: requestHeaders);
+
+    var jsonString = response.body;
+
+    try {
+      if (response.statusCode == 200) {
+        var jsonMap = json.decode(jsonString);
+        userModel = UserModel.fromJson(jsonMap);
+
+        return userModel;
+      } else {
+        return null;
+        //   userController.notFound.value = false;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+      //  userController.notFound.value = false;
+    }
   }
 }

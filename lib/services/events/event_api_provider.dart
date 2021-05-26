@@ -45,20 +45,6 @@ class EventProvider {
     return userModel;
   }
 
-  /*Future<List<User>> getLikeUserData() async {
-    var client = http.Client();
-    var userModel;
-
-    var response = await client
-        .get(Uri.parse(kUrlApi + 'events/3200/posts?paginate=true'));
-
-    List comentsJson = json.decode(response.body)['data'];
-    print("jsonMap $comentsJson");
-    return comentsJson.map((json) => new User.fromJson(json)).toList();
-
-    //   return userModel;
-  }*/
-
   Future<EventModel> setEventData(event_id, var item) async {
     var client = http.Client();
 

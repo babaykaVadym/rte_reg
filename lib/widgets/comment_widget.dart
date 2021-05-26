@@ -4,7 +4,6 @@ import 'package:rte_cubit/controllers/coment_controller.dart';
 import 'package:rte_cubit/models/coment_model.dart';
 import 'package:rte_cubit/pages/parson_draw/person_screen.dart';
 import 'package:rte_cubit/services/consts.dart';
-import 'package:rte_cubit/widgets/user_image_widgets.dart';
 
 class CommentWidgets extends StatelessWidget {
   ComentModel comet;
@@ -17,12 +16,7 @@ class CommentWidgets extends StatelessWidget {
       onTap: () {
         if (comet.user.id != Const.UserID) {
           Get.to(PersonScreen(
-            namePerson: comet.user.firstName,
-            company: comet.user.company,
-            mailPerson: comet.user.email,
-            telephone: comet.user.telephoneFullNumber,
-            UserId: comet.user.id,
-            nameSecPerson: comet.user.lastName,
+            data: comet.user,
           ));
         }
       },
@@ -36,18 +30,17 @@ class CommentWidgets extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                comet.user.id == comentController.UserId.value
-                    ? UserImageWidgets()
-                    : CircleAvatar(
-                        child: Icon(
-                          Icons.account_circle_rounded,
-                          color: kYellowColor,
-                          size: 35,
-                        ),
-                        backgroundColor: kAppBarColot,
-                        maxRadius: 30,
-                        minRadius: 15,
-                      ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 15,
+                  width: MediaQuery.of(context).size.width / 7,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.network(
+                      comet.user.avatar,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
                 SizedBox(width: 10),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -116,12 +109,10 @@ class CommentWidgets extends StatelessWidget {
 
                             final result =
                                 await comentController.like(comet.id);
-                            print("resul likeeee ${comet.id}");
                           } else if (comet.isLikedComent.value == true) {
                             comet.isLikedComent.toggle();
                             final result =
                                 await comentController.Unlike(comet.id);
-                            print("resul UNNNNUUlikeeee");
                           }
                         },
                       )),

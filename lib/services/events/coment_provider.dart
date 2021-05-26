@@ -8,7 +8,6 @@ import '../consts.dart';
 class ComentProvider {
   Future<List<ComentModel>> getComentData(event_id, coment_id) async {
     var client = http.Client();
-    var comentModel;
 
     var response = await client.get(
         Uri.parse(kUrlApi + 'events/$event_id/posts/$coment_id/comments'),

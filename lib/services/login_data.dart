@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:rte_cubit/pages/home_page.dart';
+import 'package:rte_cubit/widgets/scan_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'consts.dart';
@@ -14,10 +15,8 @@ Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 class LoginData {
   Future<bool> _isRegistered;
 
-  Future<String> loginData({mailUser, password, key}) async {
+  loginData({mailUser, password, context}) async {
     final SharedPreferences prefs = await _prefs;
-    print('usernamess2  $mailUser');
-    print('passwordss2  $password');
 
     /*var response = await http.put(Uri.parse(kUrlApi + 'auth'),
         body: {'email': mailUser, 'password': password});
@@ -33,8 +32,11 @@ class LoginData {
       if (Const.token != null) {
         prefs.setString('usernamee', mailUser);
         prefs.setString('passwordd', password);
-        snacBar(
-            key: key, color: Colors.green, text: "Успешный вход. Подождите");
+        snacBars(
+            color: Colors.green,
+            text: "Успешный вход. Подождите",
+            context: context,
+            duration: Duration(milliseconds: 1200));
         await LoadScrepss().RunTikets();
         Get.off(HomePage(
           currentIndex: 0,
@@ -46,21 +48,11 @@ class LoginData {
       }
     } else {
       Const.activeBts = true;
-      snacBar(key: key, color: Colors.red, text: "Логин или пароль неверный");
+      snacBars(
+          color: Colors.red,
+          text: "Логин или пароль неверный",
+          context: context,
+          duration: Duration(milliseconds: 1200));
     }
-  }
-
-  void snacBar({text, key, color}) {
-    key.currentState.showSnackBar(SnackBar(
-        backgroundColor: color,
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: TextStyle(fontSize: 18),
-            ),
-          ],
-        )));
   }
 }

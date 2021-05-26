@@ -16,7 +16,7 @@ class EventsScrents extends GetView<EventController> {
   var eventModel;
 
   EventsScrents({this.event_id, this.eventModel});
-  final scaffoldKeys = GlobalKey<ScaffoldState>();
+
   ComentController comentController = Get.find();
   File _image;
   PickedFile _imageFile;
@@ -24,7 +24,6 @@ class EventsScrents extends GetView<EventController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKeys,
       endDrawer: EndDrawerMenu(
         event_id: event_id,
         eventIdModel: eventModel,
@@ -77,8 +76,10 @@ class EventsScrents extends GetView<EventController> {
                           child: InputText(
                             imageFile: _imageFile,
                             event_id: event_id,
-                            scaffoldKeys: scaffoldKeys,
                           )),
+                      SizedBox(
+                        height: 5,
+                      ),
                     ],
                   );
           }),

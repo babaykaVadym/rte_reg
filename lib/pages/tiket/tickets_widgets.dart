@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rte_cubit/controllers/tickets_controller.dart';
 import 'package:rte_cubit/models/tickets_model.dart';
+
 import 'package:rte_cubit/pages/tiket/ticket_menu_screen.dart';
 
 class TicketsWidgets extends GetView<TicketsController> {
@@ -23,17 +24,16 @@ class TicketsWidgets extends GetView<TicketsController> {
           },
           child: Row(
             children: [
-              Card(
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
+              Container(
+                height: MediaQuery.of(context).size.height / 4,
+                width: MediaQuery.of(context).size.width / 2.8,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    ticketModel.event.logoUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.network(
-                      ticketModel.event.logoUrl,
-                      fit: BoxFit.cover,
-                    )),
               ),
               SizedBox(width: 20),
               Flexible(

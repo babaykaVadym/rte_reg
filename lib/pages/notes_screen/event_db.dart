@@ -15,7 +15,7 @@ class EventDb extends GetView<EventController> {
 
           return _.eventDBList.value.isEmpty
               ? Center(
-                  child: CircularProgressIndicator(),
+                  child: Text("Отсутствуют заметки"),
                 )
               : ListView.builder(
                   itemCount: _.eventDBList.length,

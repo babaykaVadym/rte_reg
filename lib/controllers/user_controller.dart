@@ -9,27 +9,16 @@ class UserController extends GetxController with StateMixin<UserModel> {
   static var imgPath;
 
   var loGos = "s".obs;
-  var userContactDat = RxList();
-  get contacttList => this.userContactDat.value;
-  set contacttList(value) => this.userContactDat.value = value;
 
   var btnUScan = false.obs;
   var btnUScanBy = false.obs;
   var menuBtn = true.obs;
 
-  /* @override
-  void onInit() {
-    super.onInit();
-       var user =  UserData().getUserData().then((value) {
-      change(value, status: RxStatus.success());
-     UserD =
-    }, onError: (err) {
-      change(
-        null,
-        status: RxStatus.error(err.toString()),
-      );
-    });
-  }*/
+  var userId = UserModel().obs;
+  var notFound = true.obs;
+
+  var contactListNotestID = List<int>().obs;
+  var contactDBList = List<UserModel>().obs;
 
   @override
   void onInit() async {
@@ -39,32 +28,25 @@ class UserController extends GetxController with StateMixin<UserModel> {
     UserD.value = user;
   }
 
-  /*void fetchUserLogo() async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    final File newImage = await File('$appDocPath/logo.png');
+  /* void getUserId(id) async {
+    var user = await UserData().getUserData();
 
-    newImage.existsSync() ? imgPath = newImage : null;
+    userId.value = user;
   }*/
-
-  void fetchUserContats() async {
-    var events = await UserData().getContactUserData();
-    if (events != null) {
-      RxStatus.success();
-
-      userContactDat.value = events as List<Datum>;
-    }
-    /*UserData()
-        .getContactUserData()
-        .then((value) => this.userContactDat = value);*/
-  }
 
   void updateUserProfile(var item) async {
     var events = await UserData().setUserData(item);
   }
 
-  /* void fetchUserData() async {
-    var user = await UserData().getUserData();
-    UserDataCont.value = user;
-  }*/
+  void getUserId(id) async {
+    var user = await UserData().getIdUser(id);
+
+    userId.value = user;
+  }
+
+  void getGBusetId(id) async {
+    var user = await UserData().getIdUser(id);
+
+    contactDBList.value.add(user);
+  }
 }

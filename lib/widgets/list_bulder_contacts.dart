@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
+import 'package:rte_cubit/models/event_model.dart';
 import 'package:rte_cubit/pages/parson_draw/person_screen.dart';
 
 class ListBuilContacts extends StatelessWidget {
@@ -18,16 +19,7 @@ class ListBuilContacts extends StatelessWidget {
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return PersonScreen(
-              namePerson: data.firstName,
-              mailPerson: data.email,
-              /* cityPerson: data.position,*/
-              telephone: data.telephoneCode + data.telephoneNumber,
-              company: data.company == null ? "" : data.company,
-              UserId: data.id,
-              nameSecPerson: data.lastName,
-              avatar: data.avatar == "https://a.rte.im/storage/avatar.png"
-                  ? "https://a3.rte.im/storage/avatar.png"
-                  : data.avatar,
+              data: data,
             );
           }));
         },
@@ -40,9 +32,7 @@ class ListBuilContacts extends StatelessWidget {
                 borderRadius: BorderRadius.circular(36),
                 child: // Icon(Icons.perm_identity),
                     Image.network(
-                  data.avatar == "https://a.rte.im/storage/avatar.png"
-                      ? "https://a3.rte.im/storage/avatar.png"
-                      : data.avatar,
+                  data.runtimeType == User ? data.avatarUrl : data.avatar,
                   fit: BoxFit.cover,
                 ),
               ),

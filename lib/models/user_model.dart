@@ -6,8 +6,6 @@ import 'dart:convert';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
-String userModelToJson(UserModel data) => json.encode(data.toJson());
-
 class UserModel {
   UserModel({
     this.id,
@@ -27,8 +25,6 @@ class UserModel {
     this.uScannedBy,
     this.children,
     this.email,
-    this.role,
-    this.permissions,
     this.createdAt,
     this.verified,
     this.mailCreditBalance,
@@ -54,8 +50,7 @@ class UserModel {
   List<dynamic> parents;
   List<dynamic> children;
   String email;
-  Role role;
-  List<Permission> permissions;
+
   DateTime createdAt;
   int verified;
   int mailCreditBalance;
@@ -81,9 +76,6 @@ class UserModel {
         parents: List<dynamic>.from(json["parents"].map((x) => x)),
         children: List<dynamic>.from(json["children"].map((x) => x)),
         email: json["email"] == null ? "" : json["email"],
-        role: Role.fromJson(json["role"]),
-        permissions: List<Permission>.from(
-            json["permissions"].map((x) => Permission.fromJson(x))),
         createdAt: DateTime.parse(json["created_at"]),
         verified: json["verified"],
         mailCreditBalance: json["mail_credit_balance"],
@@ -98,35 +90,9 @@ class UserModel {
             : List<dynamic>.from(json["u_scanned_by"].map((x) => x)),
         scans: Scans.fromJson(json["scans"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "avatar": avatar,
-        "telephone_code": telephoneCode,
-        "telephone_number": telephoneNumber,
-        "is_check_in": isCheckIn,
-        "is_print_sticker": isPrintSticker,
-        "telephone_full_number": telephoneFullNumber,
-        "custom_fields": customFields,
-        "events": List<dynamic>.from(events.map((x) => x)),
-        "company": company,
-        "parents": List<dynamic>.from(parents.map((x) => x)),
-        "children": List<dynamic>.from(children.map((x) => x)),
-        "email": email,
-        "role": role.toJson(),
-        "permissions": List<dynamic>.from(permissions.map((x) => x.toJson())),
-        "created_at": createdAt.toIso8601String(),
-        "verified": verified,
-        "mail_credit_balance": mailCreditBalance,
-        "logs": List<dynamic>.from(logs.map((x) => x)),
-        "balance_info": List<dynamic>.from(balanceInfo.map((x) => x)),
-        "scans": scans.toJson(),
-      };
 }
 
-class Permission {
+/*class Permission {
   Permission({
     this.id,
     this.name,
@@ -152,9 +118,9 @@ class Permission {
         "permission": permission,
         "group": group.toJson(),
       };
-}
+}*/
 
-class GroupClass {
+/*class GroupClass {
   GroupClass({
     this.id,
     this.name,
@@ -176,25 +142,27 @@ class GroupClass {
         "name": nameValues.reverse[name],
         "group": groupEnumValues.reverse[group],
       };
-}
+}*/
 
-enum GroupEnum { EVENT, EVENT_ORDER, EVENT_PROMO_CODE }
+//enum GroupEnum { EVENT, EVENT_ORDER, EVENT_PROMO_CODE }
 
+/*
 final groupEnumValues = EnumValues({
   "event": GroupEnum.EVENT,
   "event_order": GroupEnum.EVENT_ORDER,
   "event_promo_code": GroupEnum.EVENT_PROMO_CODE
 });
+*/
 
-enum Name { EVENTS, EVENT_ORDER_GROUP, EVENT_PROMO_CODE_GROUP }
+//enum Name { EVENTS, EVENT_ORDER_GROUP, EVENT_PROMO_CODE_GROUP }
 
-final nameValues = EnumValues({
+/*final nameValues = EnumValues({
   "Events": Name.EVENTS,
   "Event order group": Name.EVENT_ORDER_GROUP,
   "Event promo code group": Name.EVENT_PROMO_CODE_GROUP
-});
+});*/
 
-class Role {
+/*class Role {
   Role({
     this.id,
     this.name,
@@ -216,26 +184,18 @@ class Role {
         "name": name,
         "role": role,
       };
-}
+}*/
 
 class Scans {
   Scans({
     this.data,
-    this.pagination,
   });
 
   List<Datum> data;
-  Pagination pagination;
 
   factory Scans.fromJson(Map<String, dynamic> json) => Scans(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-        pagination: Pagination.fromJson(json["pagination"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "pagination": pagination.toJson(),
-      };
 }
 
 class Datum {
@@ -277,79 +237,6 @@ class Datum {
             ? "https://a3.rte.im/storage/avatar.png"
             : json["avatar"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstNameValues.reverse[firstName],
-        "last_name": lastName == null ? null : lastNameValues.reverse[lastName],
-        "telephone_code": emailValues.reverse[telephoneCode],
-        "telephone_number": emailValues.reverse[telephoneNumber],
-        "telephone_full_number": emailValues.reverse[telephoneFullNumber],
-        "email": emailValues.reverse[email],
-        "company": company == null ? null : companyValues.reverse[company],
-        "position": position == null ? null : positionValues.reverse[position],
-      };
-}
-
-enum Company { EMPTY, ASD }
-
-final companyValues =
-    EnumValues({"asd": Company.ASD, "ТОВ \"Ромашка\"": Company.EMPTY});
-
-enum Email { EMPTY }
-
-final emailValues = EnumValues({"***********": Email.EMPTY});
-
-enum FirstName { EMPTY, FIRST_NAME, ASDASDASD, ASD, MY_NEW_FIRSTNAME2 }
-
-final firstNameValues = EnumValues({
-  "asd": FirstName.ASD,
-  "asdasdasd": FirstName.ASDASDASD,
-  "Настюшка": FirstName.EMPTY,
-  "Виталий": FirstName.FIRST_NAME,
-  "my new firstname2": FirstName.MY_NEW_FIRSTNAME2
-});
-
-enum LastName { EMPTY, LAST_NAME }
-
-final lastNameValues =
-    EnumValues({"Писечкина": LastName.EMPTY, "ВЕТАЛИЙ": LastName.LAST_NAME});
-
-enum Position { EMPTY, ASD }
-
-final positionValues =
-    EnumValues({"asd": Position.ASD, "Светило ног": Position.EMPTY});
-
-class Pagination {
-  Pagination({
-    this.total,
-    this.currentPage,
-    this.totalPages,
-    this.count,
-    this.perPage,
-  });
-
-  int total;
-  int currentPage;
-  int totalPages;
-  int count;
-  int perPage;
-
-  factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
-        total: json["total"],
-        currentPage: json["current_page"],
-        totalPages: json["total_pages"],
-        count: json["count"],
-        perPage: json["per_page"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "total": total,
-        "current_page": currentPage,
-        "total_pages": totalPages,
-        "count": count,
-        "per_page": perPage,
-      };
 }
 
 class UScanned {
@@ -379,47 +266,20 @@ class UScanned {
 
   factory UScanned.fromJson(Map<String, dynamic> json) => UScanned(
         id: json["id"] == null ? null : json["id"],
-        firstName: json["first_name"] == null ? null : json["first_name"],
-        lastName: json["last_name"] == null ? null : json["last_name"],
+        firstName: json["first_name"] == null ? "" : json["first_name"],
+        lastName: json["last_name"] == null ? "" : json["last_name"],
         telephoneCode:
-            json["telephone_code"] == null ? null : json["telephone_code"],
+            json["telephone_code"] == null ? "" : json["telephone_code"],
         telephoneNumber:
-            json["telephone_number"] == null ? null : json["telephone_number"],
+            json["telephone_number"] == null ? "" : json["telephone_number"],
         telephoneFullNumber: json["telephone_full_number"] == null
-            ? null
+            ? ""
             : json["telephone_full_number"],
-        email: json["email"] == null ? null : json["email"],
-        company: json["company"] == null ? null : json["company"],
-        position: json["position"] == null ? null : json["position"],
-        avatar: json["avatar"] == null ? null : json["avatar"],
+        email: json["email"] == null ? "" : json["email"],
+        company: json["company"] == null ? "" : json["company"],
+        position: json["position"] == null ? "" : json["position"],
+        avatar: json["avatar"] == null ? "" : json["avatar"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "first_name": firstName == null ? null : firstName,
-        "last_name": lastName == null ? null : lastName,
-        "telephone_code": telephoneCode == null ? null : telephoneCode,
-        "telephone_number": telephoneNumber == null ? null : telephoneNumber,
-        "telephone_full_number":
-            telephoneFullNumber == null ? null : telephoneFullNumber,
-        "email": email == null ? null : email,
-        "company": company == null ? null : company,
-        "position": position == null ? null : position,
-      };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
 }
 
 class UserFotoUpdate {

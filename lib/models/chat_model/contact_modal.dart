@@ -91,7 +91,7 @@ class ContactModel {
         activeStatus: json["active_status"],
         darkMode: json["dark_mode"],
         messengerColor: json["messenger_color"],
-        avatar: json["avatar"],
+        avatar: json["avatar"].toString(),
         company: json["company"],
         telephoneCode: json["telephone_code"],
         telephoneNumber: json["telephone_number"],

@@ -22,7 +22,7 @@ class EventController extends GetxController
   var paginEventID = 0.obs;
   var paginEventIDContact = 0.obs;
   var eventComentTotalP = 0.obs;
-
+  var userAvatar = "".obs;
   var oldEventList = RxList();
   var eventContactLict = List<EventContact>().obs;
   final eventListM = RxList();
@@ -39,7 +39,7 @@ class EventController extends GetxController
   var comCount = 0.obs;
   var likesPeoleCount = 0.obs;
   var now = new DateTime.now();
-  final eventListLikes = RxList();
+  var eventListLikes = RxList();
 
   void fetchIdEvents() async {
     try {
@@ -171,14 +171,17 @@ class EventController extends GetxController
 
   like(event_id, coment_id) async {
     await EventProvider().setdLike(event_id, coment_id);
+    page.value = 1;
     fetchEventsComent(event_id);
     // this.eventListComs.refresh();
-    //  eventListM.refresh();
+    eventListM.refresh();
   }
 
   Unlike(event_id, coment_id) async {
     await EventProvider().setdUnLike(event_id, coment_id);
+    page.value = 1;
     fetchEventsComent(event_id);
+    eventListM.refresh();
   }
 
   sendComent({ComentModel item, event_id, coment_id}) async {

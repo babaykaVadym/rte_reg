@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/user_controller.dart';
+import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/widgets/list_bulder_contacts.dart';
 
 class UScnned extends GetView<UserController> {
@@ -51,7 +52,11 @@ class UScnned extends GetView<UserController> {
                         },
                         child: Text(
                           "Вы отсканировали",
-                          style: Theme.of(context).textTheme.headline2,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: controller.btnUScan.value
+                                  ? kYellowColor
+                                  : Colors.black),
                         )),
                     TextButton(
                         onPressed: () {
@@ -62,7 +67,11 @@ class UScnned extends GetView<UserController> {
                         },
                         child: Text(
                           "Вас отсканировали",
-                          style: Theme.of(context).textTheme.headline2,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: controller.btnUScanBy.value
+                                  ? kYellowColor
+                                  : Colors.black),
                         ))
                   ],
                 ),
@@ -73,14 +82,13 @@ class UScnned extends GetView<UserController> {
                       var userScan = controller.UserD.value.uScanned[index];
 
                       //   var userScanBy = controller.UserD.value.uScannedBy[index];
-                      print("userScan ${controller.menuBtn.value}");
 
                       if (controller.menuBtn.value) {
-                        print(controller.UserD.value.uScanned.isEmpty);
+                        print(controller.UserD.value.uScanned[index].avatar);
                         return controller.UserD.value.uScanned.isEmpty
                             ? Container()
                             : ListBuilContacts(
-                                data: userScan,
+                                data: controller.UserD.value.uScanned[index],
                               );
                       } else {
                         return controller.UserD.value.uScannedBy.isEmpty

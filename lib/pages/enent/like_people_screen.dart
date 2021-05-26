@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
-import 'package:rte_cubit/controllers/user_controller.dart';
 import 'package:rte_cubit/widgets/list_bulder_contacts.dart';
 
 class LikePeopele extends GetView<EventController> {
@@ -17,7 +16,6 @@ class LikePeopele extends GetView<EventController> {
           IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
-                print(UserController().userContactDat.length);
                 //  Get.to(NotificationsScreen());
               })
         ],
@@ -39,7 +37,9 @@ class LikePeopele extends GetView<EventController> {
                           itemCount: data.eventListLikes.length,
                           itemBuilder: (context, index) {
                             var article = data.eventListLikes[index];
-                            print("data ${data.eventListLikes.length}");
+                            print(
+                                "data ${data.eventListLikes[index].avatarUrl}");
+
                             return ListBuilContacts(
                               data: data.eventListLikes[index],
                             );
@@ -52,4 +52,3 @@ class LikePeopele extends GetView<EventController> {
     );
   }
 }
-

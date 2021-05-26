@@ -69,18 +69,21 @@ class ComentsPage extends GetView<ComentController> {
                                     width: 10,
                                   ),
                                   // First child is enter comment text input
-                                  Expanded(
+                                  Flexible(
                                     child: TextField(
+                                      minLines: 1,
+                                      maxLines: 2,
                                       controller: controllerController,
                                       decoration: InputDecoration(
+                                        alignLabelWithHint: true,
+                                        contentPadding:
+                                            EdgeInsets.fromLTRB(5, 0, 0, 0),
                                         hintText: "Комментировать",
                                         hintStyle:
                                             TextStyle(color: Colors.black54),
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(15),
-                                          borderSide: BorderSide(
-                                              color: Colors.grey, width: 2.0),
                                         ),
                                       ),
                                       onSubmitted: (text) {
@@ -99,6 +102,9 @@ class ComentsPage extends GetView<ComentController> {
                                     controllerController: controllerController,
                                   )),
                                 ])),
+                        SizedBox(
+                          height: 5,
+                        ),
                       ],
                     );
             }),

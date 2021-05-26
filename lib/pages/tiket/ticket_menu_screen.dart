@@ -7,6 +7,7 @@ import 'package:rte_cubit/controllers/tickets_controller.dart';
 import 'package:rte_cubit/models/tickets_model.dart';
 import 'package:rte_cubit/pages/tiket/tiket_menu/load_dop_material.dart';
 import 'package:rte_cubit/pages/tiket/tiket_menu/ticket_upgrad_screen.dart';
+import 'package:rte_cubit/services/consts.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 import 'tikets_person_seting.dart';
@@ -29,8 +30,10 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
           i,
           (i) => ExpansionItem(
                 id: widget.ticketModel.tickets[i].holder.id.toString(),
-                name: widget.ticketModel.tickets[i].holder.firstName,
-                phone: widget.ticketModel.tickets[i].holder.telephoneFullNumber,
+                name: widget.ticketModel.tickets[i].holder.firstName +
+                    " " +
+                    widget.ticketModel.tickets[i].holder.lastName,
+                phone: widget.ticketModel.tickets[i].holder.telephoneNumber,
                 email: widget.ticketModel.tickets[i].holder.email,
                 hash: widget.ticketModel.tickets[i].hash,
                 tiket_id: int.parse(widget.ticketModel.id),
@@ -53,7 +56,7 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Номер заказа #${widget.ticketModel.id} ',
+          'Номер заказа №${widget.ticketModel.id} ',
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -73,11 +76,14 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    height: 150,
-                    width: 150,
-                    child: Image.network(
-                      widget.ticketModel.event.logoUrl,
-                      fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height / 8.5,
+                    width: MediaQuery.of(context).size.width / 2.2,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        widget.ticketModel.event.logoUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -85,12 +91,13 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
                   ),
                   Flexible(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
                           height: 10,
                         ),
-                        _text('Name:  '),
+                        _text('Название:  '),
                         Text(
                           widget.ticketModel.event.title,
                           style: TextStyle(
@@ -99,14 +106,14 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
                         ),
                         _text(DateFormat('dd MMM - HH:mm')
                             .format(widget.ticketModel.event.eventStart)),
-                        _text('Telefon: '),
+                        _text('Контактный номер: '),
                         Text(
                           widget.ticketModel.creator.telephoneFullNumber,
                           style: TextStyle(
                             fontSize: 16,
                           ),
                         ),
-                        _text("Email: "),
+                        _text("Почта: "),
                         Text(
                           widget.ticketModel.creator.email,
                           style: TextStyle(
@@ -118,6 +125,9 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
                   )
                 ],
               ),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Flexible(
               child: ListView(
@@ -135,7 +145,6 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
                             context,
                             ticketsController,
                             widget.ticketModel,
-                            widget.ticketModel,
                             ticketdop,
                             ticketUpgrateController),
                       ),
@@ -152,15 +161,22 @@ class _TicketMenuScreenState extends State<TicketMenuScreen> {
 }
 
 ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
-    ticketModel, widget, ticketdop, ticketUpgrateController) {
+    ticketModel, ticketdop, ticketUpgrateController) {
   return ExpansionPanel(
     canTapOnHeader: true,
     headerBuilder: (BuildContext context, bool isExpanded) {
       return ListTile(
-        title: Text(
-          'Bilet: ${item.hash}',
-          textAlign: TextAlign.center,
-          // style: Theme.of(context).textTheme.subtitle1,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Билет  №',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              // style: Theme.of(context).textTheme.subtitle1,
+            ),
+            Text(item.hash)
+          ],
         ),
       );
     },
@@ -184,15 +200,34 @@ ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
                 width: 10,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Name: ${item.name}',
+                  Row(
+                    children: [
+                      Text(
+                        'ФИО: ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(item.name)
+                    ],
                   ),
-                  Text(
-                    'Fone: ${item.phone}',
+                  Row(
+                    children: [
+                      Text(
+                        'Телефон: ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(item.phone == null ? "" : item.phone)
+                    ],
                   ),
-                  Text(
-                    'Email: ${item.email}',
+                  Row(
+                    children: [
+                      Text(
+                        'Почта: ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(item.email)
+                    ],
                   ),
                   SizedBox(
                     height: 10,
@@ -215,7 +250,8 @@ ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
                 child: TextButton(
                   onPressed: () async {
                     await ticketUpgrateController.fetchUpgredaTicket(
-                        evnt_id: widget.event.id, ticket_id: widget.id);
+                        evnt_id: ticketModel.event.id,
+                        ticket_id: ticketModel.id);
 
                     Get.to(TicketUpgrade(
                       idTiket: item.tiket.id,
@@ -224,17 +260,15 @@ ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.upload_rounded),
+                      Icon(Icons.upload_rounded, color: Colors.black),
                       SizedBox(
                         width: 5,
                       ),
-                      Text("Улучшить", style: TextStyle(fontSize: 12))
+                      Text("Улучшить",
+                          style: TextStyle(fontSize: 14, color: Colors.black))
                     ],
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 5,
               ),
               Expanded(
                 child: TextButton(
@@ -245,41 +279,43 @@ ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.live_tv),
+                      Icon(Icons.live_tv, color: Colors.black),
                       SizedBox(
                         width: 5,
                       ),
-                      Text("Трансляция", style: TextStyle(fontSize: 12))
+                      Text("Трансляция",
+                          style: TextStyle(fontSize: 14, color: Colors.black))
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                width: 5,
-              ),
               Expanded(
                 child: TextButton(
                   onPressed: () async {
-                    print("widget.ticketModel.event.id ${widget.event.id}");
-                    print("widget.ticketModel.id ${widget.id}");
+                    print(
+                        "widget.ticketModel.event.id ${ticketModel.event.id}");
+                    print("widget.ticketModel.id ${ticketModel.id}");
                     print(" item.hash ${item.hash}");
 
                     await ticketdop.fetchFile(
-                        event_id: widget.event.id,
-                        tiket_id: widget.id,
+                        event_id: ticketModel.event.id,
+                        tiket_id: ticketModel.id,
                         hash_id: item.hash);
                     Get.to(LoadDopMaterial());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.file_download),
+                      Icon(
+                        Icons.file_download,
+                        color: Colors.black,
+                      ),
                       SizedBox(
                         width: 2,
                       ),
                       Text(
                         "Материалы",
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(fontSize: 14, color: Colors.black),
                       )
                     ],
                   ),
@@ -290,18 +326,26 @@ ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
-                onPressed: () {
-                  print(ticketModel.id);
-                  ticketsController.event_id.value = item.event_id;
-                  ticketsController.tiket_id.value = item.tiket_id;
-                  Get.to(TiketPersonSetings(
-                    ticket: item.tiket,
-                  ));
-                },
-                child: Text(
-                  "Изменить информацию",
+              Container(
+                height: MediaQuery.of(context).size.height / 20,
+                width: MediaQuery.of(context).size.width / 2.2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.height / 2.23),
+                  color: kYellowColor,
                 ),
+                child: TextButton(
+                    onPressed: () async {
+                      ticketsController.event_id.value = item.event_id;
+                      ticketsController.tiket_id.value = item.tiket_id;
+                      Get.to(TiketPersonSetings(
+                        ticket: item.tiket,
+                      ));
+                    },
+                    child: Text(
+                      "Изменить информацию",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    )),
               )
             ],
           )

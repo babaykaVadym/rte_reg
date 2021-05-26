@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -157,7 +155,7 @@ class TiketPersonSetings extends StatelessWidget {
                         color: kYellowColor,
                       ),
                       child: TextButton(
-                          onPressed: () async {
+                          onPressed: () {
                             btnSend(context);
                           },
                           child: Text(
@@ -207,109 +205,11 @@ class TiketPersonSetings extends StatelessWidget {
         hash_id: ticket.hash,
         item: holdeItem);
     //  await LoadScrepss().RunTikets();
-    Timer(Duration(milliseconds: 650), () {
-      Get.back();
-    });
+
     Get.back();
+
     /* Get.off(HomePage(
       currentIndex: 3,
     ));*/
   }
 }
-
-/*
-
-Column(
-mainAxisAlignment: MainAxisAlignment.center,
-children: [
-Text(ticket.hash),
-_textFild(
-name: ticket.holder.firstName,
-onChanged: (value) {
-Holdes.firstName = value;
-},
-),
-_textFild(
-name: ticket.holder.lastName,
-onChanged: (value) {
-Holdes.lastName = value;
-},
-),
-_textFild(
-name: ticket.holder.telephoneFullNumber,
-onChanged: (value) {
-Holdes.telephoneFullNumber = value;
-},
-),
-_textFild(
-name: ticket.holder.email,
-onChanged: (value) {
-Holdes.email = value;
-},
-),
-_textFild(
-name: ticket.holder.company,
-onChanged: (value) {
-Holdes.company = value;
-},
-),
-_textFild(
-name: ticket.holder.position,
-onChanged: (value) {
-Holdes.position = value;
-},
-),
-TextButton(
-onPressed: () async {
-Holdes.firstName = Holdes.firstName == null
-? ticket.holder.firstName
-    : Holdes.firstName;
-Holdes.lastName = Holdes.lastName == null
-? ticket.holder.lastName
-    : Holdes.lastName;
-Holdes.email =
-Holdes.email == null ? ticket.holder.email : Holdes.email;
-Holdes.telephoneFullNumber =
-Holdes.telephoneFullNumber == null
-? ticket.holder.telephoneFullNumber
-    : Holdes.telephoneFullNumber;
-Holdes.company = Holdes.company == null
-? ticket.holder.company
-    : Holdes.company;
-Holdes.position = Holdes.position == null
-? ticket.holder.position
-    : Holdes.position;
-
-int event_id = ticketsController.event_id.value;
-
-print("event_id ${ticketsController.event_id}");
-print("tiket_id ${ticketsController.tiket_id}");
-print("ticket.hash  ${ticket.hash}");
-
-final holderSeting = Ticket(
-    holder: Holder(
-      firstName: Holdes.firstName,
-      lastName: Holdes.lastName,
-      email: Holdes.email,
-      telephoneFullNumber: Holdes.telephoneFullNumber,
-      company: Holdes.company,
-      position: Holdes.position,
-    ));
-*/
-/*    final result = await TicketData().setdSeting(
-                      tiket_id: ticketsController.tiket_id.value,
-                      event_id: ticketsController.event_id.value,
-                      hash_id: ticket.hash,
-                      item: holderSeting);*/ /*
-
-
-await ticketsController.fetchTickets();
-Get.create(() => TicketsController());
-controller.clear();
-
-Get.to(HomeScreen());
-},
-child: Text("Сохранить"),
-)
-],
-),*/

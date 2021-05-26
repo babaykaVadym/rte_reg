@@ -24,7 +24,6 @@ class ProfilDraws extends GetView<UserController> {
 
   @override
   Widget build(BuildContext context) {
-    //  controller.fetchUserLogo();
     return Drawer(
       child: Column(
         children: [
@@ -50,6 +49,7 @@ class ProfilDraws extends GetView<UserController> {
                                 children: [
                                   FloatingActionButton(
                                       backgroundColor: kYellowColor,
+                                      heroTag: "notif",
                                       mini: true,
                                       child: Icon(
                                         Icons.notifications,
@@ -86,6 +86,7 @@ class ProfilDraws extends GetView<UserController> {
                                   ),
                                   FloatingActionButton(
                                     mini: true,
+                                    heroTag: "push",
                                     backgroundColor: kYellowColor,
                                     onPressed: () {
                                       changeIndex(4);
@@ -139,7 +140,6 @@ class ProfilDraws extends GetView<UserController> {
                         title: Text('Лента активности'),
                         onTap: () {
                           Get.to(LentaActivnosti());
-//Navigator.pushNamed(context, TimetableScreen.routeName);
                         },
                       ),
                       ListTile(
@@ -147,8 +147,7 @@ class ProfilDraws extends GetView<UserController> {
                         title: Text('Контакты'),
                         onTap: () {
                           changeIndex(1);
-                          Navigator.pop(context);
-// Navigator.pushNamed(context, ProfileSettingsScreen.routeName);
+                          Get.back();
                         },
                       ),
                       ListTile(
@@ -156,7 +155,6 @@ class ProfilDraws extends GetView<UserController> {
                         title: Text('Заметки'),
                         onTap: () {
                           Get.to(NotesScreen());
-// Navigator.pushNamed(context, FAQScreen.routeName);
                         },
                       ),
                       ListTile(
@@ -176,10 +174,7 @@ class ProfilDraws extends GetView<UserController> {
                       ListTile(
                         leading: Icon(Icons.info_outline_rounded),
                         title: Text('FAQ'),
-                        onTap: () {
-                          Navigator.pop(context);
-// Navigator.pushNamed(context, FAQScreen.routeName);
-                        },
+                        onTap: () {},
                       ),
                     ],
                   );

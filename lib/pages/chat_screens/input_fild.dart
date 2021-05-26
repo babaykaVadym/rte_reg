@@ -125,11 +125,18 @@ class _ChatScreenState extends State<InputFildChat> {
           Expanded(
             child: Stack(children: [
               TextField(
+                minLines: 1,
+                maxLines: 2,
                 controller: controller,
                 decoration: InputDecoration(
-                    hintText: "Write message...",
-                    hintStyle: TextStyle(color: Colors.black54),
-                    border: InputBorder.none),
+                  hintText: "Write message...",
+                  alignLabelWithHint: true,
+                  contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  hintStyle: TextStyle(color: Colors.black54),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
               ),
               Positioned(
                   right: -2,

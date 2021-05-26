@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:rte_cubit/controllers/user_controller.dart';
+import 'package:rte_cubit/pages/oterScreens/QR_code_menu.dart';
 
 import 'notification_screen.dart';
 
@@ -28,7 +29,9 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode result;
   QRViewController controller;
+  UserController userController = Get.find();
 
+  bool camareOff = false;
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
@@ -66,66 +69,96 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                   cutOutSize: scanArea),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text(
-                      'Barcode Type: ${describeEnum(result.format)}   Data: ${result.code}')
-                  : Text('Scan a code'),
-            ),
+          SizedBox(
+            height: 20,
           ),
-          Flexible(
-            child: Container(
-              height: MediaQuery.of(context).size.height / 17,
-              width: MediaQuery.of(context).size.height / 5,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                    MediaQuery.of(context).size.height / 2.23),
-                color: Colors.orangeAccent,
-                /*gradient: new LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.white12, Colors.orangeAccent],
-                ),*/
+          Container(
+            height: MediaQuery.of(context).size.height / 17,
+            width: MediaQuery.of(context).size.height / 5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                  MediaQuery.of(context).size.height / 2.23),
+              color: Colors.orangeAccent,
+              /*gradient: new LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white12, Colors.orangeAccent],
+              ),*/
+            ),
+            // ignore: deprecated_member_use
+            child: FlatButton(
+              child: Text(
+                "Ввести код",
+                style: TextStyle(fontSize: 20),
               ),
-              // ignore: deprecated_member_use
-              child: FlatButton(
-                child: Text(
-                  "Ввести код",
-                  style: TextStyle(fontSize: 20),
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Введите свой код"),
-                        content: TextFormField(
-                          controller: _controller,
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text("OK"),
-                            onPressed: () {
-                              Navigator.pop(context, _controller.text);
-                            },
-                          )
-                        ],
-                      );
-                    },
-                  ).then((val) {
-                    setState(() {
-                      //   inputString = val;
-                    });
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Введите свой код"),
+                      content: TextFormField(
+                        controller: _controller,
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("OK"),
+                          onPressed: () {
+                            Navigator.pop(context, _controller.text);
+                          },
+                        )
+                      ],
+                    );
+                  },
+                ).then((val) {
+                  setState(() {
+                    //   inputString = val;
                   });
-                },
-              ),
+                });
+              },
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.height / 2.23),
+                ),
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  child: Text(
+                    "Включить Камеру",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    controller.resumeCamera();
+                    setState(() {
+                      camareOff = false;
+                    });
+                  },
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.height / 2.23),
+                ),
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  child: Text(
+                    "Выключить Камеру",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    controller.pauseCamera();
+                    setState(() {
+                      camareOff = true;
+                    });
+                  },
+                ),
+              ),
               Container(
                 margin: EdgeInsets.all(8),
                 // ignore: deprecated_member_use
@@ -155,8 +188,27 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
+      setState(() async {
         result = scanData;
+        try {
+          var res = int.parse(result.code.toString().split("/").last);
+          controller.pauseCamera();
+
+          print("rrrrrrrrrrrrrrrrrrrrrrr ${res.toString()}");
+          await userController.getUserId(res);
+          Get.to(QrCodeMenu(
+            faund: true,
+          ));
+        } catch (e) {
+          print("rrrrrrrrrrrrrrrrrrrrrrr eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+          controller.pauseCamera();
+          Get.to(QrCodeMenu(
+            faund: false,
+          ));
+        }
+        //controller.pauseCamera();
+
+        //  userController.notFound.value = false;
       });
     });
   }

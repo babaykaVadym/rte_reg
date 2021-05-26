@@ -290,7 +290,6 @@ class User {
         "mail_credit_balance": mailCreditBalance,
         "logs": List<dynamic>.from(logs.map((x) => x)),
         "balance_info": List<dynamic>.from(balanceInfo.map((x) => x)),
-        "scans": scans.toJson(),
         "zones": List<dynamic>.from(zones.map((x) => x)),
       };
 }
@@ -384,11 +383,6 @@ class Scans {
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         pagination: Pagination.fromJson(json["pagination"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "pagination": pagination.toJson(),
-      };
 }
 
 class Pagination {

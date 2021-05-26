@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,6 +7,7 @@ import 'package:rte_cubit/models/user_model.dart';
 import 'package:rte_cubit/pages/enent/image_page.dart';
 import 'package:rte_cubit/pages/parson_draw/pers_seting_imag_load.dart';
 import 'package:rte_cubit/services/consts.dart';
+import 'package:rte_cubit/widgets/scan_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -47,7 +46,7 @@ class PersonalSetings extends GetView<UserController> {
                     children: [
                       Text(
                         "Ваше фото:",
-                        style: TextStyle(fontSize: 15),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -57,10 +56,10 @@ class PersonalSetings extends GetView<UserController> {
                               urll: data.avatar,
                             )),
                             child: Container(
-                              height: MediaQuery.of(context).size.height / 10,
-                              width: MediaQuery.of(context).size.height / 10,
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.width / 2.8,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
+                                borderRadius: BorderRadius.circular(200),
                                 child: Image.network(
                                   data.avatar,
                                   fit: BoxFit.cover,
@@ -69,11 +68,23 @@ class PersonalSetings extends GetView<UserController> {
                             ),
                           ),
                           Flexible(child: Container()),
-                          TextButton(
-                              onPressed: () {
-                                Get.to(ImageLoaded());
-                              },
-                              child: Text("Загрузить фото")),
+                          Container(
+                            height: MediaQuery.of(context).size.height / 15,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  MediaQuery.of(context).size.height / 2.23),
+                              color: kYellowColor,
+                            ),
+                            child: TextButton(
+                                onPressed: () async {
+                                  Get.to(ImageLoaded());
+                                },
+                                child: Text(
+                                  "Загрузить фото",
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                )),
+                          )
                         ],
                       ),
                     ],
@@ -88,7 +99,10 @@ class PersonalSetings extends GetView<UserController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Фамилия:"),
+                            Text(
+                              "Фамилия:",
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             TextFormField(
                               controller: _lastNameController,
                               decoration: InputDecoration(
@@ -103,7 +117,10 @@ class PersonalSetings extends GetView<UserController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Имя:"),
+                            Text(
+                              "Имя:",
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             TextFormField(
                               controller: _nameController,
                               decoration: InputDecoration(
@@ -118,7 +135,10 @@ class PersonalSetings extends GetView<UserController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("E-mail:"),
+                            Text(
+                              "E-mail:",
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             TextFormField(
                               controller: _mailController,
                               decoration:
@@ -133,7 +153,10 @@ class PersonalSetings extends GetView<UserController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Контактный номер:"),
+                            Text(
+                              "Контактный номер:",
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             TextFormField(
                               controller: _phoneController,
                               decoration: InputDecoration(
@@ -152,7 +175,10 @@ class PersonalSetings extends GetView<UserController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Пароль:"),
+                            Text(
+                              "Пароль:",
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(labelText: "Пароль"),
@@ -165,7 +191,10 @@ class PersonalSetings extends GetView<UserController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Компания:"),
+                            Text(
+                              "Компания:",
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             TextFormField(
                               controller: _companyController,
                               decoration: InputDecoration(
@@ -192,10 +221,15 @@ class PersonalSetings extends GetView<UserController> {
                       child: TextButton(
                           onPressed: () async {
                             passW(data, context);
+                            snacBars(
+                                text: "Сохранение",
+                                color: Colors.amberAccent,
+                                context: context,
+                                duration: Duration(milliseconds: 600));
                           },
                           child: Text(
                             "Сохранить",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           )),
                     )
                   ],
@@ -230,6 +264,10 @@ class PersonalSetings extends GetView<UserController> {
             ? data.telephoneNumber.toString()
             : _companyController.text,
       );
+      /* await prefs.setString(
+        'usernamee',
+        _mailController.text.isEmpty ? data.email : _mailController.text,
+      );*/
     } else {
       personSeting = UserUodatePass(
         firstName: _nameController.text.isEmpty
@@ -248,12 +286,20 @@ class PersonalSetings extends GetView<UserController> {
             ? data.telephoneNumber.toString()
             : _companyController.text,
       );
-      await prefs.setString('passwordss', _passwordController.text);
+      await prefs.setString('passwordd', _passwordController.text);
+      /*  await prefs.setString(
+        'usernamee',
+        _mailController.text.isEmpty ? data.email : _mailController.text,
+      );*/
     }
-    print("UserUodate ${jsonEncode(personSeting)}");
+
     final result = await controller.updateUserProfile(personSeting);
     controller.onInit();
-    print(prefs.getString("passwordss"));
+    snacBars(
+        text: "Сохранено",
+        color: Colors.green,
+        context: context,
+        duration: Duration(milliseconds: 600));
 
     FocusScope.of(context).requestFocus(new FocusNode());
   }

@@ -644,13 +644,13 @@ class Holder {
 
   factory Holder.fromJson(Map<String, dynamic> json) => Holder(
         id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
+        firstName: json["first_name"] == null ? "" : json["first_name"],
+        lastName: json["last_name"] == null ? "" : json["last_name"],
         telephoneCode:
             json["telephone_code"] == null ? "" : json["telephone_code"],
         telephoneNumber:
             json["telephone_number"] == null ? "" : json["telephone_number"],
-        telephoneFullNumber: json["telephone_full_number"],
+        telephoneFullNumber: json["telephone_full_number"] == null ? "" : json["telephone_full_number"],
         email: json["email"] == null ? '' : json["email"],
         company: json["company"] == null ? "" : json["company"],
         position: json["position"] == null ? "" : json["position"],

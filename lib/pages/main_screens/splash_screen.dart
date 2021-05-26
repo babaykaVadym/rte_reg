@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/services/login_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,7 +13,6 @@ import 'no_internet_screen.dart';
 Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
 class SplashScreen extends StatelessWidget {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     bool isInternetAvalibe = true;
@@ -20,28 +20,29 @@ class SplashScreen extends StatelessWidget {
     _checkInternetAvailability().then((value) {}).catchError((_) {
       isInternetAvalibe = false;
     });
-
-    Future.delayed(const Duration(seconds: 1), () {
-      _getRegistrationStatus().then((isRegistered) {
-        if (!isInternetAvalibe) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return NoInternetScreen();
-          }));
-        } else if (isRegistered) {
-          LogindsData(context);
-        } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return LoginScreens();
-          }));
-        }
-      }).catchError((printError) {
-        print(printError);
+    if (Const.ok) {
+      Const.ok = false;
+      Future.delayed(const Duration(seconds: 2), () {
+        _getRegistrationStatus().then((isRegistered) {
+          if (!isInternetAvalibe) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return NoInternetScreen();
+            }));
+          } else if (isRegistered) {
+            LogindsData(context);
+          } else {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return LoginScreens();
+            }));
+          }
+        }).catchError((printError) {
+          print(printError);
+        });
       });
-    });
+    }
     return Scaffold(
-      key: scaffoldKey,
       body: Stack(
         children: [
           Positioned(
@@ -72,7 +73,7 @@ class SplashScreen extends StatelessWidget {
     String log = await prefs.getString('usernamee');
     String pss = await prefs.getString('passwordd');
 
-    await LoginData().loginData(password: pss, mailUser: log, key: scaffoldKey);
+    await LoginData().loginData(password: pss, mailUser: log, context: context);
   }
 
   Future<bool> _getRegistrationStatus() async {
@@ -81,7 +82,7 @@ class SplashScreen extends StatelessWidget {
     return prefs.getBool('Registeredss') ?? false;
   }
 
-  Future<bool> _checkInternetAvailability() async {
+  _checkInternetAvailability() async {
     final result = await InternetAddress.lookup("google.com");
     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       return true;
