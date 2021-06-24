@@ -187,25 +187,27 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() async {
-        result = scanData;
-        try {
-          var res = int.parse(result.code.toString().split("/").last);
-          controller.pauseCamera();
+    controller.scannedDataStream.listen((scanData) async {
+      result = scanData;
+      try {
+        controller.pauseCamera();
+        List<String> mylist = result.code.split('?')[1].split('&');
 
-          print("rrrrrrrrrrrrrrrrrrrrrrr ${res.toString()}");
-          await userController.getUserId(res);
-          Get.to(QrCodeMenu(
-            faund: true,
-          ));
-        } catch (e) {
-          print("rrrrrrrrrrrrrrrrrrrrrrr eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-          controller.pauseCamera();
-          Get.to(QrCodeMenu(
-            faund: false,
-          ));
-        }
+        await userController.serchQrCodeUser(mylist[0].split('=')[1],
+            mylist[1].split('=')[1], mylist[2].split('=')[1]);
+
+        //  var res = int.parse(result.code.toString().split("/").last);
+        Get.to(QrCodeMenu(
+          faund: true,
+        ));
+      } catch (e) {
+        controller.pauseCamera();
+        Get.to(QrCodeMenu(
+          faund: false,
+        ));
+      }
+
+      setState(() {
         //controller.pauseCamera();
 
         //  userController.notFound.value = false;

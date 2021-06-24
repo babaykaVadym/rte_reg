@@ -84,7 +84,7 @@ class UScnned extends GetView<UserController> {
                       //   var userScanBy = controller.UserD.value.uScannedBy[index];
 
                       if (controller.menuBtn.value) {
-                        print(controller.UserD.value.uScanned[index].avatar);
+                        print(controller.UserD.value.uScanned[index].avatarUrl);
                         return controller.UserD.value.uScanned.isEmpty
                             ? Container()
                             : ListBuilContacts(

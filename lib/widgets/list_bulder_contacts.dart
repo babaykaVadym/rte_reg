@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
-import 'package:rte_cubit/models/event_model.dart';
 import 'package:rte_cubit/pages/parson_draw/person_screen.dart';
 
 class ListBuilContacts extends StatelessWidget {
@@ -32,7 +31,7 @@ class ListBuilContacts extends StatelessWidget {
                 borderRadius: BorderRadius.circular(36),
                 child: // Icon(Icons.perm_identity),
                     Image.network(
-                  data.runtimeType == User ? data.avatarUrl : data.avatar,
+                  data.avatarUrl,
                   fit: BoxFit.cover,
                 ),
               ),

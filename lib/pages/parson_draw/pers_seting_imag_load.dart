@@ -68,7 +68,7 @@ class _ImageLoadedState extends State<ImageLoaded> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(200),
                 child: Image.network(
-                  userController.UserD.value.avatar,
+                  userController.UserD.value.avatarUrl,
                   fit: BoxFit.cover,
                 ),
               ),

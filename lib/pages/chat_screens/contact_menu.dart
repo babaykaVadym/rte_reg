@@ -44,7 +44,8 @@ class ContactMenu extends GetView<ContactController> {
                             itemBuilder: (context, index) {
                               var article = _.contactList[index];
 
-                              return article.id != Const.UserID
+                              // return article.id != 0"Const.UserID"
+                              return article.id != 0
                                   ? Container(
                                       height: 60,
                                       margin: const EdgeInsets.all(10),

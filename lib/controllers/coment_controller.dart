@@ -16,12 +16,10 @@ class ComentController extends GetxController
 
   void fetchComent() async {
     try {
-      print(" coment_id coment_id $coment_id");
       isLoading(true);
       var coment = await ComentProvider().getComentData(event_id, coment_id);
       if (coment != null) {
         comentsList = coment as List<ComentModel>;
-        //this.comentsList.refresh();
       }
     } finally {
       isLoading(false);

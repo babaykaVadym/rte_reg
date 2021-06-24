@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "174259808978",
+    "project_id": "rte-test2",
+    "storage_bucket": "rte-test2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174259808978:android:464066474379d3a3c75b0b",
+        "android_client_info": {
+          "package_name": "com.rte.rte_cubit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174259808978-v3tk1kvc7tce7h30p2esqfvivq418211.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs2FQoTWLj139Mk0NsI7K6qz4uaAn4-Io"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174259808978-v3tk1kvc7tce7h30p2esqfvivq418211.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

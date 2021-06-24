@@ -13,22 +13,37 @@ class LoginScreens extends StatefulWidget {
 
 class _LoginScreensState extends State<LoginScreens> {
   bool _hidePass = true;
-
+  final loadingScreenKey = GlobalKey();
   String mailUser;
   String password;
 
   readValues() {
-    if (password.length > 3 && mailUser.contains('@') == true) {
-      print(Const.token);
-      conect();
-    } else {
+    try {
+      if (password.length > 3 && mailUser.contains('@') == true) {
+        print("ыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыы");
+        conect();
+      } else {
+        print("ыыиииииииииииииииииииииииииииииииииииииииииииии");
+        snacBars(
+            color: Colors.red,
+            context: context,
+            text: "Логин или пароль неверный",
+            duration: Duration(milliseconds: 1200));
+
+        Timer(Duration(milliseconds: 800), () {
+          setState(() {
+            Const.activeBts = true;
+          });
+        });
+      }
+    } catch (e) {
       snacBars(
           color: Colors.red,
           context: context,
           text: "Логин или пароль неверный",
           duration: Duration(milliseconds: 1200));
 
-      Timer(Duration(milliseconds: 800), () {
+      Timer(Duration(milliseconds: 1500), () {
         setState(() {
           Const.activeBts = true;
         });
@@ -37,6 +52,11 @@ class _LoginScreensState extends State<LoginScreens> {
   }
 
   conect() {
+    Timer(Duration(milliseconds: 4000), () {
+      setState(() {
+        Const.activeBts = true;
+      });
+    });
     LoginData()
         .loginData(mailUser: mailUser, password: password, context: context);
   }
@@ -44,6 +64,7 @@ class _LoginScreensState extends State<LoginScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: loadingScreenKey,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
@@ -130,6 +151,8 @@ class _LoginScreensState extends State<LoginScreens> {
                           ),
                           onPressed: () {
                             setState(() {
+                              FocusScope.of(context)
+                                  .requestFocus(new FocusNode());
                               Const.activeBts = false;
                               Timer(Duration(milliseconds: 800), () {
                                 setState(() {
@@ -138,8 +161,6 @@ class _LoginScreensState extends State<LoginScreens> {
                               });
                             });
                             readValues();
-                            FocusScope.of(context)
-                                .requestFocus(new FocusNode());
                           },
                         ),
                       )

@@ -1,4 +1,7 @@
+import 'package:badges/badges.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/chat/contact_controller.dart';
@@ -22,12 +25,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   ContactController controller;
-
+  int countMess = 0;
   @override
   void initState() {
     // TODO: implement initState
     controller = Get.put<ContactController>(ContactController());
     controller.fetchContact();
+
+    Firebase.initializeApp().whenComplete(() {
+      print("completed");
+      setState(() {
+        FirebaseMessaging messaging = FirebaseMessaging.instance;
+        print(
+            "messaging.getAPNSToken() ${messaging.getToken().then((value) => print(value))}");
+        messaging.getToken().then((value) async {
+          controller.tokenFMC.value = value;
+
+          print("value token ${value}");
+          print("value token ${Const.UserID}");
+          controller.sendTokenDevice(token: value, id: Const.UserID);
+        });
+      });
+    });
   }
 
   void changePage(int index) {
@@ -99,7 +118,10 @@ class _HomePageState extends State<HomePage> {
             Icon(Icons.contact_page_outlined, size: 30),
             Icon(Icons.qr_code_scanner, size: 30),
             Icon(Icons.event, size: 30),
-            Icon(Icons.chat, size: 30),
+            Badge(
+                badgeContent:
+                    Obx(() => Text(controller.countMesseg.value.toString())),
+                child: Icon(Icons.chat, size: 30)),
           ],
           color: kAppBarColot,
           buttonBackgroundColor: kAppBarColot,

@@ -5,9 +5,12 @@ import 'package:rte_cubit/controllers/user_controller.dart';
 import 'package:rte_cubit/models/chat_model/message_model.dart';
 import 'package:rte_cubit/models/db/data_base_model.dart';
 import 'package:rte_cubit/pages/chat_screens/chat_api.dart';
+import 'package:rte_cubit/pages/contact_page/contact_data_helper.dart';
+import 'package:rte_cubit/pages/contact_page/contact_db.dart';
 import 'package:rte_cubit/pages/notes_screen/data_base_helper.dart';
 import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/services/getLoadNotif.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PersonScreen extends StatefulWidget {
   var data;
@@ -27,9 +30,20 @@ class _PersonScreenState extends State<PersonScreen> {
     await db.saveUser(coment);
   }
 
+  void addToSaveDB({userid}) async {
+    var db = new ContactDatabaseHelper();
+    var coment = ContactDataBaseMaodel(userid);
+    await db.saveUser(coment);
+  }
+
   void deletDB({id}) async {
     var db = new DatabaseHelper();
     await db.deleteUsersId(id);
+  }
+
+  void deletSaveDB({id}) async {
+    var db = new ContactDatabaseHelper();
+    await db.deleteUsers(id);
   }
 
   UserController userController = Get.find();
@@ -39,6 +53,7 @@ class _PersonScreenState extends State<PersonScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Container(
           child: Row(
@@ -86,11 +101,42 @@ class _PersonScreenState extends State<PersonScreen> {
                         print(userController.contactDBList.value);
                         Get.back();
                       }),
-              IconButton(
-                  icon: Icon(
-                    Icons.group_add,
-                  ),
-                  onPressed: null)
+              !userController.contactSaveListID.value.contains(widget.data.id)
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.group_add,
+                      ),
+                      onPressed: () async {
+                        if (!userController.contactSaveListID.value
+                            .contains(widget.data.id)) {
+                          print(userController.contactSvaveDBList.value);
+                          addToSaveDB(userid: widget.data.id);
+
+                          await GetLoadNotif().getContactSaveDB();
+                          setState(() {
+                            userController.contactSaveListID.refresh();
+                          });
+                          print(userController.contactDBList.value);
+                        }
+                      })
+                  : IconButton(
+                      icon: Icon(
+                        Icons.delete_forever_outlined,
+                      ),
+                      onPressed: () {
+                        print(userController.contactSvaveDBList.value);
+                        print(widget.data.id);
+                        setState(() {
+                          deletDB(id: widget.data.id);
+                          userController.contactSaveListID
+                              .remove(widget.data.id);
+                          userController.contactSvaveDBList.remove(widget.data);
+                          print(userController.contactSvaveDBList.value);
+                          userController.contactSvaveDBList.refresh();
+                          userController.contactSaveListID.refresh();
+                          userController.UserD.refresh();
+                        });
+                      }),
             ],
           ),
         ),
@@ -112,7 +158,7 @@ class _PersonScreenState extends State<PersonScreen> {
                     borderRadius: BorderRadius.circular(140),
                     child: // Icon(Icons.perm_identity),
                         Image.network(
-                      widget.data.avatar,
+                      widget.data.avatarUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -181,11 +227,31 @@ class _PersonScreenState extends State<PersonScreen> {
               indent: 10,
               endIndent: 10,
             ),
-            _textColum(
-                paramT: widget.data.telephoneFullNumber,
-                nameT: 'Телефонный номер'),
-            _textColum(paramT: widget.data.email, nameT: 'e-mail'),
-            _textColum(paramT: widget.data.company, nameT: 'Компания'),
+            GestureDetector(
+              onTap: () {
+                launch(
+                    "tel:${widget.data.telephoneCode + widget.data.telephoneNumber}");
+              },
+              child: Container(
+                color: Colors.white,
+                child: _textColum(
+                    paramT:
+                        widget.data.telephoneCode + widget.data.telephoneNumber,
+                    nameT: 'Телефонный номер'),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                launch("mailto:${widget.data.email}");
+              },
+              child: Container(
+                  color: Colors.white,
+                  child:
+                      _textColum(paramT: widget.data.email, nameT: 'e-mail')),
+            ),
+            widget.data.company == null
+                ? Container()
+                : _textColum(paramT: widget.data.company, nameT: 'Компания'),
             // _textColum(paramT: cityPerson, nameT: 'Position'),
           ],
         ),
@@ -200,15 +266,11 @@ Widget _textColum({String nameT, String paramT}) {
       Text(
         nameT,
         style: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-        ),
+            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
       ),
       Text(
         paramT,
-        style: TextStyle(
-          fontSize: 15,
-        ),
+        style: TextStyle(fontSize: 15, color: Colors.black),
       ),
       Divider(
         thickness: 3,

@@ -58,4 +58,16 @@ class UserData {
       //  userController.notFound.value = false;
     }
   }
+
+  Future<int> getIdUserQr(event_id, orderId, ticketId) async {
+    var client = http.Client();
+    var response = await client.get(
+        Uri.parse(
+            kUrlApi + 'events/$event_id/orders/$orderId/tickets/$ticketId'),
+        headers: requestHeaders);
+
+    int jsonString = json.decode(response.body)["write_to"];
+
+    return jsonString;
+  }
 }

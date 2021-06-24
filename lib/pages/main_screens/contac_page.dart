@@ -32,12 +32,11 @@ class ContactPage extends GetView<UserController> {
       body: GetX<UserController>(
         initState: (state) => Get.find<UserController>(),
         builder: (data) {
-          print("data ${data.UserD.value.scans.data.length}");
-          print(
-              "contactListNotestID.value   ===== ${data.contactListNotestID.value}");
-          return data.UserD.value.scans.data.isEmpty
+          print("data ${data.contactSvaveDBList.length}");
+
+          return data.contactSvaveDBList.isEmpty
               ? Center(
-                  child: Text("Нет контактов"),
+                  child: Text("Нет сохраненных контактов"),
                 )
               : Column(
                   children: [
@@ -59,13 +58,13 @@ class ContactPage extends GetView<UserController> {
                           text = text.toLowerCase();
                           print(searchString);
                           searchString = text;
-                          data.UserD.refresh();
+                          data.contactSvaveDBList.refresh();
                         },
                       ),
                     ),
                     Flexible(
                       child: ListView.builder(
-                          itemCount: data.UserD.value.scans.data.length,
+                          itemCount: data.contactSvaveDBList.length,
                           itemBuilder: (context, index) {
                             var article = data.UserD.value.scans.data[index];
                             return article.firstName

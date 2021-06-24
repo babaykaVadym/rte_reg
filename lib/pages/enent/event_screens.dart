@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:listview_utils/listview_utils.dart';
 import 'package:rte_cubit/controllers/coment_controller.dart';
 import 'package:rte_cubit/controllers/event_controller.dart';
 import 'package:rte_cubit/widgets/inputInfo.dart';
@@ -41,30 +42,51 @@ class EventsScrents extends GetView<EventController> {
       body: GetX<EventController>(
           initState: (state) => Get.find<EventController>(),
           builder: (_) {
-            return _.eventListCom.length == null
+            print("_.eventListCom.length ${_.eventListCom.length}");
+
+            return _.eventListCom.length == 0
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
                 : Column(
                     children: [
-                      Expanded(
-                        child: ListView.builder(
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Flexible(
+                        child: CustomListView(
+                            header: Container(
+                              color: Colors.white,
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.network(
+                                  eventModel.logo,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                             itemCount: _.eventListCom.length,
-                            itemBuilder: (context, index) {
+                            itemBuilder: (BuildContext context, int index, _) {
                               // controller.fetchLikesList();
+                              // index++;
 
                               for (int i = 0;
-                                  i < _.eventListCom[index].likes.length;
+                                  i <
+                                      controller
+                                          .eventListCom[index].likes.length;
                                   i++) {
-                                if (_.eventListCom[index].likes[i].id ==
+                                if (controller
+                                        .eventListCom[index].likes[i].id ==
                                     controller.UserId.value) {
-                                  _.eventListCom[index].user.isLiked.value =
-                                      true;
+                                  controller.eventListCom[index].user.isLiked
+                                      .value = true;
                                 }
                               }
 
                               return EventBlocBuild(
-                                article: _.eventListComs[index],
+                                article: controller.eventListCom[index],
                                 eventController: controller,
                                 isDB: false,
                               );

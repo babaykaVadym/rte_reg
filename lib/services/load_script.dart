@@ -36,14 +36,14 @@ class LoadScrepss {
             .add(ticketsController.ticketsList[i].event.id);
       }
     }
+
     await eventController.fetchIdEvents();
-    //   await userController.fetchUserLogo();
 
     eventController.UserId.value = userController.UserD.value.id == null
         ? 0
         : userController.UserD.value.id;
     Const.UserID = userController.UserD.value.id;
     comentController.UserId.value = userController.UserD.value.id;
-    eventController.userAvatar.value = userController.UserD.value.avatar;
+    eventController.userAvatar.value = userController.UserD.value.avatarUrl;
   }
 }

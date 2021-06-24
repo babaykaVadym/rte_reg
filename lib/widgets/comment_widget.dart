@@ -32,11 +32,11 @@ class CommentWidgets extends StatelessWidget {
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height / 15,
-                  width: MediaQuery.of(context).size.width / 7,
+                  width: MediaQuery.of(context).size.width / 8,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(100),
                     child: Image.network(
-                      comet.user.avatar,
+                      comet.user.avatarUrl,
                       fit: BoxFit.cover,
                     ),
                   ),

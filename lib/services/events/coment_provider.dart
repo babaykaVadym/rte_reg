@@ -13,7 +13,11 @@ class ComentProvider {
         Uri.parse(kUrlApi + 'events/$event_id/posts/$coment_id/comments'),
         headers: requestHeaders);
 
-    final List<dynamic> comentsJson = json.decode(response.body);
+    print(
+        "444444444444444444444444444444444444444444444 ${json.decode(response.body)["data"]}");
+
+    final List<dynamic> comentsJson = json.decode(response.body)["data"];
+
     return comentsJson.map((json) => ComentModel.fromJson(json)).toList();
   }
 

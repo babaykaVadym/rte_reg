@@ -62,7 +62,7 @@ class EventContact extends GetView<EventController> {
                               return Center(child: CircularProgressIndicator());
                             }*/
                             print(
-                                "avata ${data.eventContactLict[index].avatar}");
+                                "avata ${data.eventContactLict[index].avatarUrl}");
                             print(
                                 "dataaaaaaaaaaaaaaaaaaaaa  ${data.eventContactLict.length}");
                             return ListBuilContacts(

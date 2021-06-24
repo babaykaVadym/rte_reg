@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rte_cubit/controllers/chat/masseg_controller.dart';
 import 'package:rte_cubit/models/chat_model/chat_dio.dart';
 import 'package:rte_cubit/services/consts.dart';
+import 'package:rte_cubit/widgets/scan_bar.dart';
 
 class InputFildChat extends StatefulWidget {
   ScrollController scrollController;
@@ -154,6 +155,13 @@ class _ChatScreenState extends State<InputFildChat> {
           ),
           FloatingActionButton(
             onPressed: () async {
+              FocusScope.of(context).requestFocus(new FocusNode());
+              snacBars(
+                  text: "Отправлено",
+                  color: Colors.green[100],
+                  context: context,
+                  duration: Duration(milliseconds: 400));
+
               if (_imageFile == null) {
                 setState(() {
                   messegeController.sendMessege(messege: controller.text);
@@ -161,7 +169,7 @@ class _ChatScreenState extends State<InputFildChat> {
                       Duration(seconds: 2),
                       () => widget.scrollController.jumpTo(
                           widget.scrollController.position.maxScrollExtent));
-                  FocusScope.of(context).requestFocus(new FocusNode());
+
                   controller.clear();
                 });
               } else {
@@ -175,11 +183,9 @@ class _ChatScreenState extends State<InputFildChat> {
                     _imageFile = null;
                   });
                   controller.clear();
-                  FocusScope.of(context).requestFocus(new FocusNode());
+                  //   FocusScope.of(context).requestFocus(new FocusNode());
                 });
               }
-
-              setState(() {});
             },
             child: Icon(
               Icons.send,

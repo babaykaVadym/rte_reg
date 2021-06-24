@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -5,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:rte_cubit/controllers/coment_controller.dart';
@@ -30,6 +32,7 @@ class EventBlocBuild extends StatefulWidget {
 }
 
 class _EventBlocBuildState extends State<EventBlocBuild> {
+  TextEditingController _controller = TextEditingController();
   void addToDB({type, evet_id, post, userid}) async {
     var db = new DatabaseHelper();
     var coment = DataBaseMaodel(type, evet_id, post, userid);
@@ -66,6 +69,8 @@ class _EventBlocBuildState extends State<EventBlocBuild> {
             child: GestureDetector(
               onTap: () {
                 if (widget.article.user.id != Const.UserID) {
+                  print("test ${widget.article.user}");
+
                   Get.to(PersonScreen(
                     data: widget.article.user,
                   ));
@@ -244,14 +249,13 @@ class _EventBlocBuildState extends State<EventBlocBuild> {
                                 widget.article.event.id;
                             comentController.coment_id.value =
                                 widget.article.id;
-
-                            await comentController.fetchComent();
-                            widget.eventController.eventListLikes.value =
-                                widget.article.likes;
-
+                            comentController.comentsLists.clear();
                             Get.to(ComentsPage(
                               eventController: widget.article,
                             ));
+                            await comentController.fetchComent();
+                            widget.eventController.eventListLikes.value =
+                                widget.article.likes;
                           }),
                       Flexible(child: Container()),
                       PopupMenuButton(
@@ -278,9 +282,10 @@ class _EventBlocBuildState extends State<EventBlocBuild> {
                             ),
                             value: (2),
                           ),
-                          /*  PopupMenuItem(
-                              child: Text("Пожаловаться на публикацию"),
-                              value: (3)),*/
+                          PopupMenuItem(
+                              child: Text("Пожаловаться на публикацию",
+                                  style: Theme.of(context).textTheme.bodyText1),
+                              value: (3)),
                         ],
                         onSelected: (rout) async {
                           print("rout ${rout.toString()}");
@@ -335,6 +340,70 @@ class _EventBlocBuildState extends State<EventBlocBuild> {
                                     context: context,
                                     duration: Duration(milliseconds: 500));
                               }
+                              break;
+                            case 3:
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Напишите жалобу:"),
+                                    content: Container(
+                                      width: 350,
+                                      child: TextField(
+                                        minLines: 1,
+                                        maxLines: 6,
+                                        decoration: InputDecoration(
+                                          alignLabelWithHint: true,
+                                          contentPadding: EdgeInsets.all(8),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                        controller: _controller,
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text("Отправить"),
+                                        onPressed: () {
+                                          Navigator.pop(
+                                              context, _controller.text);
+                                          _controller.clear();
+                                        },
+                                      )
+                                    ],
+                                  );
+                                },
+                              ).then((val) async {
+                                var item = {"report_text": val};
+
+                                var request = await http.post(
+                                    Uri.parse(kUrlApi +
+                                        'events/${widget.article.event.id}/posts/${widget.article.id}/reports'),
+                                    headers: requestHeaders,
+                                    body: json.encode(item));
+
+                                if (request.statusCode == 200) {
+                                  snacBars(
+                                      text: "Жалоба отправлена",
+                                      color: Colors.green[200],
+                                      context: context,
+                                      duration: Duration(milliseconds: 600));
+                                } else if (request.statusCode == 500) {
+                                  snacBars(
+                                      text: "Уже отправляли",
+                                      color: Colors.red,
+                                      context: context,
+                                      duration: Duration(milliseconds: 600));
+                                } else {
+                                  snacBars(
+                                      text: "Ошибка публикации",
+                                      color: Colors.red,
+                                      context: context,
+                                      duration: Duration(milliseconds: 600));
+                                }
+                              });
                               break;
                           }
                         },

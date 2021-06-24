@@ -22,4 +22,19 @@ class ContactReositori {
       return null;
     }
   }
+
+  Future<void> sendTokenFMC({String token, id}) async {
+    var client = http.Client();
+    var requestBody = jsonEncode({
+      'token': token,
+      'user_id': id,
+    });
+    var response = await client.post(
+        Uri.parse('https://a3.rte.im/chatify/saveDeviceToken'),
+        headers: requestHeaders,
+        body: requestBody);
+
+    print("send token ${response.body}");
+    print("send token ${response.statusCode}");
+  }
 }

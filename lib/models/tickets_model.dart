@@ -3,8 +3,6 @@ import 'dart:convert';
 TicketModel ticketModelFromJson(String str) =>
     TicketModel.fromJson(json.decode(str));
 
-String ticketModelToJson(TicketModel data) => json.encode(data.toJson());
-
 class TicketModel {
   TicketModel({
     this.data,
@@ -22,12 +20,6 @@ class TicketModel {
         totalTicketCount: json["total_ticket_count"],
         pagination: Pagination.fromJson(json["pagination"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "total_ticket_count": totalTicketCount,
-        "pagination": pagination.toJson(),
-      };
 }
 
 class DatumData {
@@ -65,18 +57,6 @@ class DatumData {
         tickets:
             List<Ticket>.from(json["tickets"].map((x) => Ticket.fromJson(x))),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "price": price,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "agent_info": agentInfo == null ? null : agentInfo,
-        "creator": creator.toJson(),
-        "event": event.toJson(),
-        "status": status.toJson(),
-        "tickets": List<dynamic>.from(tickets.map((x) => x.toJson())),
-      };
 }
 
 class Creator {
@@ -95,29 +75,7 @@ class Creator {
         email: json["email"],
         telephoneFullNumber: json["telephone_full_number"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "first_name": firstName == null ? null : firstName,
-        "email": emailValues.reverse[email],
-        "telephone_full_number":
-            telephoneFullNumberValues.reverse[telephoneFullNumber],
-      };
 }
-
-enum Email { ASDASD_ASD_ASD, RTEADMIN_GMAIL_COM }
-
-final emailValues = EnumValues({
-  "asdasd@asd.asd": Email.ASDASD_ASD_ASD,
-  "rteadmin@gmail.com": Email.RTEADMIN_GMAIL_COM
-});
-
-enum TelephoneFullNumber { THE_380111111111, EMPTY, THE_380980346408 }
-
-final telephoneFullNumberValues = EnumValues({
-  "": TelephoneFullNumber.EMPTY,
-  "380111111111": TelephoneFullNumber.THE_380111111111,
-  "380980346408": TelephoneFullNumber.THE_380980346408
-});
 
 class Event {
   Event({
@@ -139,7 +97,6 @@ class Event {
     this.locationName,
     this.createdAt,
     this.updatedAt,
-    this.fillStep,
     this.statistics,
     this.finances,
   });
@@ -162,7 +119,7 @@ class Event {
   String locationName;
   DateTime createdAt;
   DateTime updatedAt;
-  FillStep fillStep;
+
   List<dynamic> statistics;
   List<dynamic> finances;
 
@@ -185,97 +142,13 @@ class Event {
         locationName: json["location_name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        fillStep: FillStep.fromJson(json["fill_step"]),
+
         statistics: List<dynamic>.from(json["statistics"].map((x) => x)),
         finances: List<dynamic>.from(json["finances"].map((x) => x)),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "address": address,
-        "address_lat": addressLat,
-        "address_lng": addressLng,
-        "registration_start": registrationStart.toIso8601String(),
-        "registration_end": registrationEnd.toIso8601String(),
-        "event_start": eventStart.toIso8601String(),
-        "event_end": eventEnd.toIso8601String(),
-        "owner": owner.toJson(),
-        //  "setting": setting.toJson(),
-        "logo": logoUrl,
-        "logo_type": logoType,
-        //   "subway_station": subwayStation,
-        "location_name": locationName,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "fill_step": fillStep.toJson(),
-        "statistics": List<dynamic>.from(statistics.map((x) => x)),
-        "finances": List<dynamic>.from(finances.map((x) => x)),
-      };
 }
 
-class FillStep {
-  FillStep({
-    this.id,
-    this.mainSettingStep,
-    this.ticketSchemaStep,
-    this.mailTestStep,
-    this.registerFormStep,
-    this.siteEventStep,
-    this.paymentMethodStep,
-    this.eventId,
-    this.createdAt,
-    this.updatedAt,
-    this.promoCodesStep,
-    this.streamingLinksStep,
-  });
-
-  int id;
-  int mainSettingStep;
-  int ticketSchemaStep;
-  int mailTestStep;
-  int registerFormStep;
-  int siteEventStep;
-  int paymentMethodStep;
-  int eventId;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int promoCodesStep;
-  int streamingLinksStep;
-
-  factory FillStep.fromJson(Map<String, dynamic> json) => FillStep(
-        id: json["id"],
-        mainSettingStep: json["main_setting_step"],
-        ticketSchemaStep: json["ticket_schema_step"],
-        mailTestStep: json["mail_test_step"],
-        registerFormStep: json["register_form_step"],
-        siteEventStep: json["site_event_step"],
-        paymentMethodStep: json["payment_method_step"],
-        eventId: json["event_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        promoCodesStep: json["promo_codes_step"],
-        streamingLinksStep: json["streaming_links_step"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "main_setting_step": mainSettingStep,
-        "ticket_schema_step": ticketSchemaStep,
-        "mail_test_step": mailTestStep,
-        "register_form_step": registerFormStep,
-        "site_event_step": siteEventStep,
-        "payment_method_step": paymentMethodStep,
-        "event_id": eventId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "promo_codes_step": promoCodesStep,
-        "streaming_links_step": streamingLinksStep,
-      };
-}
-
-class Setting {
+/*class Setting {
   Setting({
     this.status,
     this.category,
@@ -342,9 +215,9 @@ class Setting {
         subject: Subject.fromJson(json["subject"]),
         recountCurrency: json["recount_currency"],
         paymentCurrency: Language.fromJson(json["payment_currency"]),
-        /*  checkIn: json["check_in"] == null
+        */ /*  checkIn: json["check_in"] == null
             ? null
-            : CheckIn.fromJson(json["check_in"]),*/
+            : CheckIn.fromJson(json["check_in"]),*/ /*
         language: Language.fromJson(json["language"]),
         country: Country.fromJson(json["country"]),
         fixCommission: json["fix_commission"],
@@ -409,7 +282,7 @@ class Setting {
         "available_duplicate_contacts": availableDuplicateContacts,
         "use_ticket_schema_emails": useTicketSchemaEmails,
       };
-}
+}*/
 
 class Category {
   Category({
@@ -435,76 +308,6 @@ class Category {
       };
 }
 
-class Country {
-  Country({
-    this.id,
-    this.name,
-    this.country,
-    this.isoCode,
-    this.languages,
-    this.currencies,
-  });
-
-  int id;
-  String name;
-  String country;
-  String isoCode;
-  List<Language> languages;
-  List<Language> currencies;
-
-  factory Country.fromJson(Map<String, dynamic> json) => Country(
-        id: json["id"],
-        name: json["name"],
-        country: json["country"],
-        isoCode: json["iso_code"],
-        languages: List<Language>.from(
-            json["languages"].map((x) => Language.fromJson(x))),
-        currencies: List<Language>.from(
-            json["currencies"].map((x) => Language.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "country": country,
-        "iso_code": isoCode,
-        "languages": List<dynamic>.from(languages.map((x) => x.toJson())),
-        "currencies": List<dynamic>.from(currencies.map((x) => x.toJson())),
-      };
-}
-
-class Language {
-  Language({
-    this.id,
-    this.name,
-    this.currency,
-    this.isoCode,
-    this.language,
-  });
-
-  int id;
-  String name;
-  String currency;
-  String isoCode;
-  String language;
-
-  factory Language.fromJson(Map<String, dynamic> json) => Language(
-        id: json["id"],
-        name: json["name"],
-        currency: json["currency"] == null ? null : json["currency"],
-        isoCode: json["iso_code"],
-        language: json["language"] == null ? null : json["language"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "currency": currency == null ? null : currency,
-        "iso_code": isoCode,
-        "language": language == null ? null : language,
-      };
-}
-
 class Status {
   Status({
     this.id,
@@ -526,30 +329,6 @@ class Status {
         "id": id,
         "name": name,
         "status": status,
-      };
-}
-
-class Subject {
-  Subject({
-    this.id,
-    this.name,
-    this.subject,
-  });
-
-  int id;
-  String name;
-  String subject;
-
-  factory Subject.fromJson(Map<String, dynamic> json) => Subject(
-        id: json["id"],
-        name: json["name"],
-        subject: json["subject"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "subject": subject,
       };
 }
 
@@ -650,7 +429,9 @@ class Holder {
             json["telephone_code"] == null ? "" : json["telephone_code"],
         telephoneNumber:
             json["telephone_number"] == null ? "" : json["telephone_number"],
-        telephoneFullNumber: json["telephone_full_number"] == null ? "" : json["telephone_full_number"],
+        telephoneFullNumber: json["telephone_full_number"] == null
+            ? ""
+            : json["telephone_full_number"],
         email: json["email"] == null ? '' : json["email"],
         company: json["company"] == null ? "" : json["company"],
         position: json["position"] == null ? "" : json["position"],

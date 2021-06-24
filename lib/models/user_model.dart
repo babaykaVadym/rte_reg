@@ -11,7 +11,7 @@ class UserModel {
     this.id,
     this.firstName,
     this.lastName,
-    this.avatar,
+    this.avatarUrl,
     this.telephoneCode,
     this.telephoneNumber,
     this.isCheckIn,
@@ -36,7 +36,7 @@ class UserModel {
   int id;
   String firstName;
   dynamic lastName;
-  dynamic avatar;
+  dynamic avatarUrl;
   String telephoneCode;
   String telephoneNumber;
   int isCheckIn;
@@ -62,7 +62,7 @@ class UserModel {
         id: json["id"],
         firstName: json["first_name"] == null ? "" : json["first_name"],
         lastName: json["last_name"] == null ? "" : json["last_name"],
-        avatar: json["avatar"],
+        avatarUrl: json["avatar"],
         telephoneCode: json["telephone_code"],
         telephoneNumber: json["telephone_number"],
         isCheckIn: json["is_check_in"],
@@ -209,7 +209,7 @@ class Datum {
     this.email,
     this.company,
     this.position,
-    this.avatar,
+    this.avatarUrl,
   });
 
   int id;
@@ -221,7 +221,7 @@ class Datum {
   String email;
   String company;
   String position;
-  String avatar;
+  String avatarUrl;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -233,7 +233,7 @@ class Datum {
         email: json["email"],
         company: json["company"] == null ? '' : json["company"],
         position: json["position"] == null ? '' : json["position"],
-        avatar: json["avatar"] == null
+        avatarUrl: json["avatar"] == null
             ? "https://a3.rte.im/storage/avatar.png"
             : json["avatar"],
       );
@@ -250,7 +250,7 @@ class UScanned {
     this.email,
     this.company,
     this.position,
-    this.avatar,
+    this.avatarUrl,
   });
 
   int id;
@@ -262,7 +262,7 @@ class UScanned {
   String email;
   String company;
   String position;
-  String avatar;
+  String avatarUrl;
 
   factory UScanned.fromJson(Map<String, dynamic> json) => UScanned(
         id: json["id"] == null ? null : json["id"],
@@ -278,7 +278,7 @@ class UScanned {
         email: json["email"] == null ? "" : json["email"],
         company: json["company"] == null ? "" : json["company"],
         position: json["position"] == null ? "" : json["position"],
-        avatar: json["avatar"] == null ? "" : json["avatar"],
+        avatarUrl: json["avatar"] == null ? "" : json["avatar"],
       );
 }
 
@@ -299,21 +299,18 @@ class UserFotoUpdate {
 
 class UserUodate {
   UserUodate(
-      {this.email,
-      this.firstName,
+      {this.firstName,
       this.lastName,
       this.telephoneCode,
       this.telephoneNumber,
       this.company});
 
-  String email;
   String firstName;
   String lastName;
   String telephoneCode;
   String telephoneNumber;
   String company;
   Map<String, dynamic> toJson() => {
-        "email": email,
         "first_name": firstName,
         "last_name": lastName,
         "telephone_code": telephoneCode,
@@ -324,15 +321,13 @@ class UserUodate {
 
 class UserUodatePass {
   UserUodatePass(
-      {this.email,
-      this.firstName,
+      {this.firstName,
       this.lastName,
       this.password,
       this.telephoneCode,
       this.telephoneNumber,
       this.company});
 
-  String email;
   String firstName;
   String lastName;
   String password;
@@ -341,7 +336,6 @@ class UserUodatePass {
   String company;
 
   Map<String, dynamic> toJson() => {
-        "email": email,
         "first_name": firstName,
         "last_name": lastName,
         "password": password,

@@ -37,6 +37,7 @@ class ChatApi extends GetView<MessegeController> {
           ],
         ),
       ),
+      backgroundColor: kBackgroundColor,
       body: GetX<MessegeController>(
         initState: (state) => Get.find<MessegeController>(),
         builder: (controller) {

@@ -22,9 +22,15 @@ class QrCodeMenu extends GetView<UserController> {
                   child: Text("Неверный код"),
                 )
               : faund
-                  ? PersonScreen(
-                      data: data,
-                    )
+                  ? controller.userIdnole.value
+                      ? Center(
+                          child: Expanded(
+                              child: Text(
+                                  "У пользователя отсутствует личный кабинет")),
+                        )
+                      : PersonScreen(
+                          data: data,
+                        )
                   : Center(
                       child: Text("Неверный код"),
                     );

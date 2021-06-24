@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     GetLoadNotif().getId();
+    GetLoadNotif().getContactSaveDB();
     super.initState();
   }
 

@@ -327,8 +327,8 @@ ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height / 20,
-                width: MediaQuery.of(context).size.width / 2.2,
+                height: MediaQuery.of(context).size.height / 18,
+                width: MediaQuery.of(context).size.width / 2,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                       MediaQuery.of(context).size.height / 2.23),
@@ -343,7 +343,7 @@ ExpansionPanel _buildFaqRow(ExpansionItem item, context, ticketsController,
                       ));
                     },
                     child: Text(
-                      "Изменить информацию",
+                      "Изменить",
                       style: Theme.of(context).textTheme.bodyText1,
                     )),
               )

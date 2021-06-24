@@ -182,116 +182,46 @@ class Pivot {
       };
 }
 
+//avatarUrl
+
 class User {
   User({
     this.id,
     this.firstName,
     this.lastName,
-    this.avatar,
+    this.avatarUrl,
     this.telephoneCode,
     this.telephoneNumber,
-    this.isCheckIn,
-    this.isPrintSticker,
     this.telephoneFullNumber,
-    this.customFields,
-    this.events,
-    this.company,
-    this.parents,
-    this.children,
     this.email,
-    this.role,
-    this.permissions,
-    this.createdAt,
-    this.verified,
-    this.mailCreditBalance,
-    this.logs,
-    this.balanceInfo,
-    this.scans,
-    this.zones,
+    this.company,
   });
 
   int id;
   String firstName;
-  dynamic lastName;
-  String avatar;
+  String lastName;
+  String avatarUrl;
   String telephoneCode;
   String telephoneNumber;
-  int isCheckIn;
-  int isPrintSticker;
   String telephoneFullNumber;
-  dynamic customFields;
-  List<dynamic> events;
-  dynamic company;
-  List<dynamic> parents;
-  List<dynamic> children;
   String email;
-  Role role;
-  List<Permission> permissions;
-  DateTime createdAt;
-  int verified;
-  int mailCreditBalance;
-  List<dynamic> logs;
-  List<dynamic> balanceInfo;
-  Scans scans;
-  List<dynamic> zones;
+  String company;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
+        id: json["id"] == null ? null : json["id"],
         firstName: json["first_name"] == null ? "" : json["first_name"],
         lastName: json["last_name"] == null ? "" : json["last_name"],
-        avatar: json["avatar"],
+        avatarUrl: json["avatar"] == null ? null : json["avatar"],
         telephoneCode:
-            json["telephone_code"] == null ? null : json["telephone_code"],
+            json["telephone_code"] == null ? "" : json["telephone_code"],
         telephoneNumber:
-            json["telephone_number"] == null ? null : json["telephone_number"],
-        isCheckIn: json["is_check_in"],
-        isPrintSticker: json["is_print_sticker"],
-        telephoneFullNumber: json["telephone_full_number"],
-        customFields: json["custom_fields"],
-        events: List<dynamic>.from(json["events"].map((x) => x)),
+            json["telephone_number"] == null ? "" : json["telephone_number"],
+        telephoneFullNumber: json["telephone_full_number"] == null
+            ? ""
+            : json["telephone_full_number"],
+        email: json["email"] == null ? "" : json["email"],
         company: json["company"] == null ? "" : json["company"],
-        parents: List<dynamic>.from(json["parents"].map((x) => x)),
-        children: List<dynamic>.from(json["children"].map((x) => x)),
-        email: json["email"],
-        role: Role.fromJson(json["role"]),
-        permissions: List<Permission>.from(
-            json["permissions"].map((x) => Permission.fromJson(x))),
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        verified: json["verified"],
-        mailCreditBalance: json["mail_credit_balance"],
-        logs: List<dynamic>.from(json["logs"].map((x) => x)),
-        balanceInfo: List<dynamic>.from(json["balance_info"].map((x) => x)),
-        scans: Scans.fromJson(json["scans"]),
-        zones: List<dynamic>.from(json["zones"].map((x) => x)),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName == null ? null : firstName,
-        "last_name": lastName,
-        "avatar": avatar,
-        "telephone_code": telephoneCode == null ? null : telephoneCode,
-        "telephone_number": telephoneNumber == null ? null : telephoneNumber,
-        "is_check_in": isCheckIn,
-        "is_print_sticker": isPrintSticker,
-        "telephone_full_number": telephoneFullNumber,
-        "custom_fields": customFields,
-        "events": List<dynamic>.from(events.map((x) => x)),
-        "company": company,
-        "parents": List<dynamic>.from(parents.map((x) => x)),
-        "children": List<dynamic>.from(children.map((x) => x)),
-        "email": email,
-        "role": role.toJson(),
-        "permissions": List<dynamic>.from(permissions.map((x) => x.toJson())),
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "verified": verified,
-        "mail_credit_balance": mailCreditBalance,
-        "logs": List<dynamic>.from(logs.map((x) => x)),
-        "balance_info": List<dynamic>.from(balanceInfo.map((x) => x)),
-        "zones": List<dynamic>.from(zones.map((x) => x)),
-      };
 }
 
 class Permission {

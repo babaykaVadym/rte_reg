@@ -30,7 +30,7 @@ class ComentsPage extends GetView<ComentController> {
         child: GetX<ComentController>(
             initState: (state) => Get.find<ComentController>(),
             builder: (_) {
-              return _.comentsList.length == null
+              return _.comentsList.isEmpty
                   ? Center(
                       child: CircularProgressIndicator(),
                     )

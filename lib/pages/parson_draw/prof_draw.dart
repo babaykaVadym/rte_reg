@@ -67,14 +67,14 @@ class ProfilDraws extends GetView<UserController> {
                                     child: Container(
                                       height:
                                           MediaQuery.of(context).size.height /
-                                              10,
+                                              6,
                                       width:
-                                          MediaQuery.of(context).size.height /
-                                              10,
+                                          MediaQuery.of(context).size.width / 3,
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
+                                        borderRadius:
+                                            BorderRadius.circular(150),
                                         child: Image.network(
-                                          data.avatar,
+                                          data.avatarUrl,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -136,44 +136,80 @@ class ProfilDraws extends GetView<UserController> {
                         ),
                       ),
                       ListTile(
-                        leading: Icon(Icons.wifi),
-                        title: Text('Лента активности'),
+                        leading: Icon(
+                          Icons.wifi,
+                          size: 28,
+                        ),
+                        title: Text(
+                          'Лента активности',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                         onTap: () {
                           Get.to(LentaActivnosti());
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.people),
-                        title: Text('Контакты'),
+                        leading: Icon(
+                          Icons.people,
+                          size: 28,
+                        ),
+                        title: Text(
+                          'Контакты',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                         onTap: () {
                           changeIndex(1);
                           Get.back();
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.bookmark_border_outlined),
-                        title: Text('Заметки'),
+                        leading: Icon(
+                          Icons.bookmark_border_outlined,
+                          size: 28,
+                        ),
+                        title: Text(
+                          'Заметки',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                         onTap: () {
                           Get.to(NotesScreen());
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.settings),
-                        title: Text('Настройки профиля'),
-                        onTap: () {
-                          Get.to(PersonalSetings());
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.history),
-                        title: Text('История скаирования'),
+                        leading: Icon(
+                          Icons.history,
+                          size: 28,
+                        ),
+                        title: Text(
+                          'История скаирования',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                         onTap: () {
                           Get.to(UScnned());
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.info_outline_rounded),
-                        title: Text('FAQ'),
+                        leading: Icon(
+                          Icons.settings,
+                          size: 28,
+                        ),
+                        title: Text(
+                          'Настройки профиля',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        onTap: () {
+                          Get.to(PersonalSetings());
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.info_outline_rounded,
+                          size: 28,
+                        ),
+                        title: Text(
+                          'FAQ',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
                         onTap: () {},
                       ),
                     ],
@@ -181,7 +217,10 @@ class ProfilDraws extends GetView<UserController> {
                 }),
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app),
+            leading: Icon(
+              Icons.exit_to_app,
+              size: 30,
+            ),
             title: Text(
               'ВЫЙТИ ИЗ ПРОФИЛЯ',
               style: Theme.of(context).textTheme.subtitle1,

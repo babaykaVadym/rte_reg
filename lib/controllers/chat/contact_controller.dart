@@ -10,6 +10,9 @@ class ContactController extends GetxController
   static bool start = true;
   GetSocket webSocket;
   var wsData = RxList();
+  var tokenFMC = "".obs;
+
+  var countMesseg = 0.obs;
 
   final isConnected = false.obs;
 
@@ -18,7 +21,7 @@ class ContactController extends GetxController
       var events = await ContactReositori().getEventData();
       if (events != null) {
         if (start) {
-          Timer.periodic(Duration(seconds: 5), (timer) {
+          Timer.periodic(Duration(seconds: 4), (timer) {
             fetchContact();
           });
 
@@ -27,7 +30,19 @@ class ContactController extends GetxController
 
         RxStatus.success();
         contactList.value = events as List<ContactModel>;
+        countMesseg.value = 0;
+        if (contactList.value.isNotEmpty) {
+          for (int i = 0; i < contactList.value.length; i++) {
+            if (contactList.value[i].seen == 0) {
+              countMesseg.value++;
+            }
+          }
+        }
       }
     } finally {}
+  }
+
+  void sendTokenDevice({token, id}) async {
+    await ContactReositori().sendTokenFMC(token: token, id: id);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:rte_cubit/controllers/user_controller.dart';
 import 'package:rte_cubit/models/user_model.dart';
@@ -17,12 +16,11 @@ class PersonalSetings extends GetView<UserController> {
   final _lastNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _mailController = TextEditingController();
+
   final _companyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // controller.fetchUserLogo();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -53,7 +51,7 @@ class PersonalSetings extends GetView<UserController> {
                         children: [
                           GestureDetector(
                             onTap: () => Get.to(ImagePage(
-                              urll: data.avatar,
+                              urll: data.avatarUrl,
                             )),
                             child: Container(
                               height: MediaQuery.of(context).size.height / 6,
@@ -61,7 +59,7 @@ class PersonalSetings extends GetView<UserController> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(200),
                                 child: Image.network(
-                                  data.avatar,
+                                  data.avatarUrl,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -126,24 +124,6 @@ class PersonalSetings extends GetView<UserController> {
                               decoration: InputDecoration(
                                 labelText: data.firstName,
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "E-mail:",
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            TextFormField(
-                              controller: _mailController,
-                              decoration:
-                                  InputDecoration(labelText: data.email),
-                              keyboardType: TextInputType.emailAddress,
                             ),
                           ],
                         ),
@@ -245,7 +225,7 @@ class PersonalSetings extends GetView<UserController> {
 
   void passW(data, context) async {
     final SharedPreferences prefs = await _prefs;
-    print("_mailController.text ${_mailController.text.isEmpty}");
+
     var personSeting;
     if (_passwordController.text.isEmpty) {
       personSeting = UserUodate(
@@ -255,7 +235,6 @@ class PersonalSetings extends GetView<UserController> {
         lastName: _lastNameController.text.isEmpty
             ? data.lastName
             : _lastNameController.text,
-        email: _mailController.text.isEmpty ? data.email : _mailController.text,
         telephoneCode: data.telephoneCode.toString(),
         telephoneNumber: _phoneController.text.isEmpty
             ? data.telephoneNumber.toString()
@@ -277,7 +256,6 @@ class PersonalSetings extends GetView<UserController> {
             ? data.lastName
             : _lastNameController.text,
         password: _passwordController.text,
-        email: _mailController.text.isEmpty ? data.email : _mailController.text,
         telephoneCode: data.telephoneCode.toString(),
         telephoneNumber: _phoneController.text.isEmpty
             ? data.telephoneNumber.toString()
@@ -287,10 +265,6 @@ class PersonalSetings extends GetView<UserController> {
             : _companyController.text,
       );
       await prefs.setString('passwordd', _passwordController.text);
-      /*  await prefs.setString(
-        'usernamee',
-        _mailController.text.isEmpty ? data.email : _mailController.text,
-      );*/
     }
 
     final result = await controller.updateUserProfile(personSeting);

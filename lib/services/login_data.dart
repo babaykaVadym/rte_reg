@@ -29,7 +29,9 @@ class LoginData {
       var jsonData = await jsonDecode(response.body);
       Const.token = jsonData['access_token'];
       print("tokent  = ${Const.token}");
-      if (Const.token != null) {
+      var role = jsonData['role']['role'];
+      print("role  = ${role}");
+      if (Const.token != null && role == "customer") {
         prefs.setString('usernamee', mailUser);
         prefs.setString('passwordd', password);
         snacBars(
@@ -45,6 +47,13 @@ class LoginData {
             prefs.setBool("Registeredss", true).then((bool success) {
           return _isRegistered;
         });
+      } else {
+        Const.activeBts = true;
+        snacBars(
+            color: Colors.red,
+            text: "Логин или пароль неверный",
+            context: context,
+            duration: Duration(milliseconds: 1200));
       }
     } else {
       Const.activeBts = true;
