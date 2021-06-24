@@ -1,0 +1,15 @@
+Index: lib/pages/tiket/tikets_person_seting.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/pages/tiket/tikets_person_seting.dart	(revision eceae6d2f986fc9681efb696eacffaa6536c3560)
++++ lib/pages/tiket/tikets_person_seting.dart	(date 1621337655221)
+@@ -175,6 +175,7 @@
+       ),
+     );
+   }
++
+ //
+   btnSend(context) async {
+     FocusScope.of(context).requestFocus(new FocusNode());
