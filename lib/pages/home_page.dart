@@ -41,9 +41,10 @@ class _HomePageState extends State<HomePage> {
         messaging.getToken().then((value) async {
           controller.tokenFMC.value = value;
 
-          print("value token ${value}");
-          print("value token ${Const.UserID}");
-          controller.sendTokenDevice(token: value, id: Const.UserID);
+          print(
+              "value  3333333333333333333333333333333333333333333 token ${value}");
+
+          controller.sendTokenDevice(token: value);
         });
       });
     });

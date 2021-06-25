@@ -42,7 +42,7 @@ class ContactController extends GetxController
     } finally {}
   }
 
-  void sendTokenDevice({token, id}) async {
-    await ContactReositori().sendTokenFMC(token: token, id: id);
+  void sendTokenDevice({token}) async {
+    await ContactReositori().sendTokenFMC(token: token);
   }
 }
