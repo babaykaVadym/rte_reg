@@ -86,7 +86,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               ),*/
             ),
             // ignore: deprecated_member_use
-            child: FlatButton(
+            child: MaterialButton(
               child: Text(
                 "Ввести код",
                 style: TextStyle(fontSize: 20),
@@ -101,7 +101,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                         controller: _controller,
                       ),
                       actions: <Widget>[
-                        FlatButton(
+                        MaterialButton(
                           child: Text("OK"),
                           onPressed: () {
                             Navigator.pop(context, _controller.text);
@@ -127,7 +127,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                       MediaQuery.of(context).size.height / 2.23),
                 ),
                 // ignore: deprecated_member_use
-                child: FlatButton(
+                child: MaterialButton(
                   child: Text(
                     "Включить Камеру",
                     style: TextStyle(fontSize: 15),
@@ -146,7 +146,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                       MediaQuery.of(context).size.height / 2.23),
                 ),
                 // ignore: deprecated_member_use
-                child: FlatButton(
+                child: MaterialButton(
                   child: Text(
                     "Выключить Камеру",
                     style: TextStyle(fontSize: 15),
@@ -162,7 +162,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               Container(
                 margin: EdgeInsets.all(8),
                 // ignore: deprecated_member_use
-                child: FlatButton(
+                child: MaterialButton(
                     onPressed: () async {
                       await controller?.toggleFlash();
                       setState(() {});

@@ -48,7 +48,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 1, left: 60),
-                    child: FlatButton(
+                    child: MaterialButton(
                         onPressed: () {},
                         child: Row(
                           children: [

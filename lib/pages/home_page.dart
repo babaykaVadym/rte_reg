@@ -41,9 +41,6 @@ class _HomePageState extends State<HomePage> {
         messaging.getToken().then((value) async {
           controller.tokenFMC.value = value;
 
-          print(
-              "value  3333333333333333333333333333333333333333333 token ${value}");
-
           controller.sendTokenDevice(token: value);
         });
       });
@@ -119,10 +116,10 @@ class _HomePageState extends State<HomePage> {
             Icon(Icons.contact_page_outlined, size: 30),
             Icon(Icons.qr_code_scanner, size: 30),
             Icon(Icons.event, size: 30),
-            Badge(
-                badgeContent:
-                    Obx(() => Text(controller.countMesseg.value.toString())),
-                child: Icon(Icons.chat, size: 30)),
+            // Badge(
+            //     badgeContent:
+            //         Obx(() => Text(controller.countMesseg.value.toString())),
+            //     child: Icon(Icons.chat, size: 30)),
           ],
           color: kAppBarColot,
           buttonBackgroundColor: kAppBarColot,

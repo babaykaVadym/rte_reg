@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:rte_cubit/models/user_model.dart';
 
+import '../services/user/user_data.dart';
+
 //import 'package:path_provider/path_provider.dart';
-import 'file:///D:/__flutter/rte_cubit/lib/services/user/user_data.dart';
+//import 'file:///D:/__flutter/rte_cubit/lib/services/user/user_data.dart';
 
 class UserController extends GetxController with StateMixin<UserModel> {
   var UserD = UserModel().obs;

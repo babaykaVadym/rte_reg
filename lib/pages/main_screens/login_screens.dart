@@ -144,7 +144,7 @@ class _LoginScreensState extends State<LoginScreens> {
                           color: kYellowColor,
                         ),
                         // ignore: deprecated_member_use
-                        child: FlatButton(
+                        child: MaterialButton(
                           child: Text(
                             "Войти",
                             style: TextStyle(fontSize: 20),
@@ -171,7 +171,7 @@ class _LoginScreensState extends State<LoginScreens> {
                           color: kAppBarColot,
                         ),
                         // ignore: deprecated_member_use
-                        child: FlatButton(
+                        child: MaterialButton(
                           child: Text(
                             "Войти",
                             style: TextStyle(fontSize: 20),
