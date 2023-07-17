@@ -6,6 +6,7 @@ import 'package:rte_cubit/services/consts.dart';
 import 'package:rte_cubit/widgets/list_bulder_contacts.dart';
 
 class ContactPage extends GetView<UserController> {
+  //test build
   static appBar(context) => AppBar(
         centerTitle: true,
         title: Text(

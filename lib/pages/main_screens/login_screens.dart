@@ -20,10 +20,8 @@ class _LoginScreensState extends State<LoginScreens> {
   readValues() {
     try {
       if (password.length > 3 && mailUser.contains('@') == true) {
-        print("ыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыы");
         conect();
       } else {
-        print("ыыиииииииииииииииииииииииииииииииииииииииииииии");
         snacBars(
             color: Colors.red,
             context: context,

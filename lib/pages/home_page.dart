@@ -16,6 +16,7 @@ import 'main_screens/ticket_screen.dart';
 import 'parson_draw/prof_draw.dart';
 
 class HomePage extends StatefulWidget {
+  //test build
   int currentIndex;
   HomePage({this.currentIndex});
   static String routeName = "/";
